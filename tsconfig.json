@@ -1,0 +1,34 @@
+{
+  "exclude": [
+    "node_modules"
+  ],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": "src",
+    "declaration": true,
+    "experimentalDecorators": true,
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "module": "ES6",
+    "newLine": "LF",
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "rootDir": "src",
+    "target": "ESNext",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "jsx": "react",
+    "moduleResolution": "node",
+    "sourceMap": true
+  },
+  "include": [
+    "./src/**/*"
+  ]
+}
