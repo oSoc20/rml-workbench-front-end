@@ -8,7 +8,7 @@
 
 ---
 
-### Vocabulary
+## Vocabulary
 
 The following is a non-exhaustive list of commonly used vocabulary:
 
@@ -23,6 +23,6 @@ The following is a non-exhaustive list of commonly used vocabulary:
   <dd>A RDF file (e.g. N-Quads, TriG, Turtle).</dd>
 </dl>
 
-### License
+## License
 
 Code is under the [MIT License](https://github.com/oSoc20/rml-workbench-front-end/blob/master/LICENSE).
