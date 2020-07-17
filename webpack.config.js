@@ -5,6 +5,7 @@ const htmlPlugin = new HtmlWebpackPlugin({
   title: 'RML.io Dashboard',
   template: './src/index.html',
   filename: './index.html',
+  favicon: './src/assets/favicon.png',
 });
 
 module.exports = (env, argv) => {
