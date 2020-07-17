@@ -1,5 +1,4 @@
 .cache
 dist
-public
 node_modules
 .tern-port
