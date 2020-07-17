@@ -8,6 +8,21 @@
 
 ---
 
+### Vocabulary
+
+The following is a non-exhaustive list of commonly used vocabulary:
+
+<dl>
+  <dt>Processor</dt>
+  <dd>Generates a target according to a mapping config.</dd>
+
+  <dt>Source</dt>
+  <dd>An input files (e.g. CSV, JSON, XML) or an RDF file (e.g. N-Quads, TriG, Turtle).</dd>
+
+  <dt>Target</dt>
+  <dd>A RDF file (e.g. N-Quads, TriG, Turtle).</dd>
+</dl>
+
 ### License
 
 Code is under the [MIT License](https://github.com/oSoc20/rml-workbench-front-end/blob/master/LICENSE).
