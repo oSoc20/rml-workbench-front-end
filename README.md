@@ -10,4 +10,4 @@
 
 ### License
 
-Code is under the [MIT License](https://github.com/oSoc20/rml-workbench-front-end/master/LICENSE).
+Code is under the [MIT License](https://github.com/oSoc20/rml-workbench-front-end/blob/master/LICENSE).
