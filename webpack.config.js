@@ -1,8 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
-const Dotenv = require('dotenv-webpack');
-
 const htmlPlugin = new HtmlWebpackPlugin({
   title: 'RML.io Dashboard',
   template: './src/index.html',
@@ -116,6 +114,6 @@ module.exports = (env, argv) => {
       historyApiFallback: true,
       publicPath: '/',
     },
-    plugins: [htmlPlugin, new Dotenv()],
+    plugins: [htmlPlugin],
   };
 };
