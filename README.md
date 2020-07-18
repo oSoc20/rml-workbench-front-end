@@ -23,6 +23,19 @@ The following is a non-exhaustive list of commonly used vocabulary:
   <dd>A RDF file (e.g. N-Quads, TriG, Turtle).</dd>
 </dl>
 
+## FAQ
+
+### What's knowledge graphs?
+
+A knowledge graph acquires and integrates information into an ontology and applies a reasoner to
+derive new knowledge. With a knowledge graph, a machine machine can easily understand and extract
+the information.
+
+### Where knowledge graphs are used?
+
+Knowledge graphs are often used in various areas of machine learning (ML), natural language
+processing (NLP) and search.
+
 ## License
 
 Code is under the [MIT License](https://github.com/oSoc20/rml-workbench-front-end/blob/master/LICENSE).
