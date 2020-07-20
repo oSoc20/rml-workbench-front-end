@@ -41,6 +41,7 @@ import {
 import { addProcessor, getById, getConfig, removeById } from '../utils/processor';
 import { addSource, removeSource } from '../utils/source';
 import LineTo from 'react-lineto';
+import { findSources } from '../utils/mapperConfig';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -165,6 +166,7 @@ const Dashboard = () => {
 
   const handleProcessingSave = () => {
     processors[processorIndex].config = tmpConfig;
+    processors[processorIndex].sources = findSources(tmpConfig);
     setIsProcessingOpen(false);
   };
 
@@ -215,7 +217,7 @@ const Dashboard = () => {
                     button
                     key={`source_${index}`}
                     disableGutters={true}
-                    className={'source' + index}
+                    className={`${source.name}.${source.extension}`}
                   >
                     <ListItemAvatar>
                       <Avatar className={classes.purple}>
@@ -244,15 +246,6 @@ const Dashboard = () => {
                         <ClearIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
-                    <LineTo
-                      from={'source' + index}
-                      to="processor1"
-                      fromAnchor="center right"
-                      toAnchor="-5% 50%"
-                      borderColor="black"
-                      borderWidth={2}
-                      delay={100}
-                    />
                   </ListItem>
                 ))}
               </List>
@@ -288,7 +281,7 @@ const Dashboard = () => {
                     key={`processor_${processor.id}`}
                     disableGutters={true}
                     onClick={() => handleProcessingClick(index)}
-                    className={'processor' + index}
+                    className={'processor' + processor.id}
                   >
                     <ListItemAvatar>
                       <Avatar className={classes.orange}>
@@ -308,6 +301,17 @@ const Dashboard = () => {
                         <ClearIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
+                    {processor.sources.map((source: any) => (
+                      <LineTo
+                        from={source}
+                        to={'processor' + processor.id}
+                        fromAnchor="center right"
+                        toAnchor="-5% 50%"
+                        borderColor="black"
+                        borderWidth={2}
+                        delay={100}
+                      />
+                    ))}
                   </ListItem>
                 ))}
               </List>
