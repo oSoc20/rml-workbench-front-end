@@ -248,7 +248,7 @@ const Dashboard = () => {
                       from={'source' + index}
                       to="processor1"
                       fromAnchor="center right"
-                      toAnchor="-10% 50%"
+                      toAnchor="-5% 50%"
                       borderColor="black"
                       borderWidth={2}
                       delay={100}
