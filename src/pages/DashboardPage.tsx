@@ -40,6 +40,7 @@ import {
 } from '../utils/stringProcessing';
 import { addProcessor, getById, getConfig, removeById } from '../utils/processor';
 import { addSource, removeSource } from '../utils/source';
+import LineTo from 'react-lineto';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -210,7 +211,12 @@ const Dashboard = () => {
               <Title title={TITLES[0].title} tooltip={TITLES[0].tooltip} />
               <List>
                 {sources.map((source: any, index: number) => (
-                  <ListItem button key={`source_${index}`} disableGutters={true}>
+                  <ListItem
+                    button
+                    key={`source_${index}`}
+                    disableGutters={true}
+                    className={'source' + index}
+                  >
                     <ListItemAvatar>
                       <Avatar className={classes.purple}>
                         <DescriptionIcon />
@@ -238,6 +244,15 @@ const Dashboard = () => {
                         <ClearIcon />
                       </IconButton>
                     </ListItemSecondaryAction>
+                    <LineTo
+                      from={'source' + index}
+                      to="processor1"
+                      fromAnchor="center right"
+                      toAnchor="-10% 50%"
+                      borderColor="black"
+                      borderWidth={2}
+                      delay={100}
+                    />
                   </ListItem>
                 ))}
               </List>
@@ -273,6 +288,7 @@ const Dashboard = () => {
                     key={`processor_${processor.id}`}
                     disableGutters={true}
                     onClick={() => handleProcessingClick(index)}
+                    className={'processor' + index}
                   >
                     <ListItemAvatar>
                       <Avatar className={classes.orange}>
