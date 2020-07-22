@@ -223,17 +223,23 @@ const Dashboard = () => {
     formData.append('isExecutable', JSON.stringify(isExecutable));
     formData.append('isDownloadable', JSON.stringify(isDownloadable));
 
-    for (var processor of processors) {
+    let tmpProcessors = [...processors];
+    for (var processor of tmpProcessors) {
+      processor.config = btoa(processor.config);
+      console.log(processors[0].config);
       formData.append('processors[]', JSON.stringify(processor));
     }
 
     toArray(sources).forEach((source) => {
       getBase64(source, (result: any) => {
+        console.log(result);
         formData.append('sources[]', result);
       });
     });
 
-    console.log(formData.getAll('sources[]'));
+    for (var pair of formData.entries()) {
+      console.log(pair[0] + ' - ' + pair[1]);
+    }
   };
 
   const toArray = (fileList: any) => {
