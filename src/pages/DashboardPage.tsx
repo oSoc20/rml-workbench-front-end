@@ -1,46 +1,20 @@
 import React, { useState } from 'react';
 import {
-  Avatar,
   Button,
   Checkbox,
   FormControlLabel,
   FormGroup,
   Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemSecondaryAction,
-  ListItemText,
   Paper,
-  TextField,
   Theme,
-  Typography,
   createStyles,
   makeStyles,
 } from '@material-ui/core';
 import { deepOrange, purple, teal } from '@material-ui/core/colors';
-import AddIcon from '@material-ui/icons/Add';
-import ClearIcon from '@material-ui/icons/Clear';
-import DescriptionIcon from '@material-ui/icons/Description';
-import MapIcon from '@material-ui/icons/Map';
-import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 
 import MyDialog from '../components/MyDialog';
-import Title from '../components/Title';
-import { MAPPER_DEFAULT, RDF_FILE_FORMATS } from '../constants/defaults';
-import { TITLES } from '../constants/titles';
-import {
-  capitalizeFirstLetter,
-  getExtension,
-  getRdfByExtension,
-  getRdfFileFormat,
-  trimFileExtension,
-} from '../utils/stringProcessing';
-import { addProcessor, getById, getConfig, removeById } from '../utils/processor';
-import { removeSource } from '../utils/source';
-import LineTo from 'react-lineto';
-import { findSources } from '../utils/mapperConfig';
+import Column from "../components/Column";
+import {ComponentCategory} from "../constants/componentCategory";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -96,37 +70,53 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+
+const CONFIG_DEFAULT = [{
+  id: new Date().getMilliseconds(),
+  category: ComponentCategory.Source,
+  components: []
+}, {
+  id: new Date().getMilliseconds() + 1, // or unique hash in future
+  category: ComponentCategory.Processor,
+  components: [],
+}, {
+  id: new Date().getMilliseconds() + 2,
+  category: ComponentCategory.Target,
+  components: [],
+}];
+
 const Dashboard = () => {
   const classes = useStyles();
 
   const [isDeploySettingsOpen, setIsDeploySettings] = useState(false);
-  const [isTargetOpen, setIsTargetOpen] = useState(false);
-  const [isProcessingOpen, setIsProcessingOpen] = useState(false);
 
-  const [processors, setProcessors] = useState([Object.assign({}, MAPPER_DEFAULT)]);
-  const [sources, setSources] = useState([]);
-
-  const [tmpConfig, setTmpConfig] = useState('');
+  const [columns, setColumns] = useState([...CONFIG_DEFAULT.map((col) => ({...col}))]);
 
   const [isTmpDownloadable, setIsTmpDownloadable] = useState(false);
   const [isTmpExecutable, setIsTmpExecutable] = useState(false);
   const [isExecutable, setIsExecutable] = useState(false);
   const [isDownloadable, setIsDownloadable] = useState(false);
 
-  const [currentTarget, setCurrentTarget] = useState(0);
-  const [processorIndex, setProcessorIndex] = useState(0);
+  const handleUpdateColumn = (id, data) => {
+    const newColumns = columns.map((col) => {
+      if (col.id === id) {
+        return {...data};
+      }
+      return col;
+    });
 
-  const handleAddProcessor = () => {
-    setProcessors(addProcessor(processors));
+    // TODO save to localStorage (all projects) + processColumns to check if every processor has a target with same id
+
+    setColumns(newColumns);
   };
 
-  const handleFilesUpload = (event: any) => {
+  /* const handleFilesUpload = (event: any) => {
     if (event.target.files.length > 0 && sources.length === 0) {
       setSources(event.target.files);
     } else {
       let sourcesArray = toArray(sources);
       let tmp = [];
-      for (var file of event.target.files) {
+      for (const file of event.target.files) {
         if (
           sourcesArray
             .map((source: any) => {
@@ -139,11 +129,7 @@ const Dashboard = () => {
       }
       setSources(sourcesArray.concat(tmp));
     }
-  };
-
-  const handleChange = (event: any) => {
-    setTmpConfig(event.target.value);
-  };
+  }; */
 
   const handleChangeSettings = (setting: string) => (event: any) => {
     if (setting === 'isTmpDownloadable') {
@@ -153,38 +139,8 @@ const Dashboard = () => {
     }
   };
 
-  const handleFileFormatClick = (fileFormat: any) => {
-    let processor = getById(processors, currentTarget);
-    processor.target = getRdfFileFormat(fileFormat)?.extension;
-    setIsTargetOpen(false);
-  };
-
-  const handleProcessingClick = (index: number) => {
-    setProcessorIndex(index);
-    setIsProcessingOpen(true);
-  };
-
-  const handleProcessingClose = () => {
-    setIsProcessingOpen(false);
-  };
-
-  const handleProcessingSave = () => {
-    processors[processorIndex].config = tmpConfig;
-    processors[processorIndex].sources = findSources(tmpConfig);
-    setIsProcessingOpen(false);
-  };
-
   const handleSettings = () => {
     setIsDeploySettings(true);
-  };
-
-  const handleRemoveProcessor = (id: number) => {
-    setProcessors(removeById(processors, id));
-    setTmpConfig(MAPPER_DEFAULT.config);
-  };
-
-  const handleRemoveSource = (source: any) => {
-    setSources(removeSource(source.name, sources));
   };
 
   const handleSettingsClose = () => {
@@ -200,16 +156,7 @@ const Dashboard = () => {
     setIsDeploySettings(false);
   };
 
-  const handleTargetClick = (id: number) => {
-    setCurrentTarget(id);
-    setIsTargetOpen(true);
-  };
-
-  const handleTargetClose = () => {
-    setIsTargetOpen(false);
-  };
-
-  const getBase64 = (file, cb) => {
+  /* const getBase64 = (file, cb) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
@@ -218,15 +165,15 @@ const Dashboard = () => {
     reader.onerror = function (error) {
       console.log('Error: ', error);
     };
-  };
+  }; */
 
   const sendData = async () => {
     let formData = new FormData();
     formData.append('isExecutable', JSON.stringify(isExecutable));
     formData.append('isDownloadable', JSON.stringify(isDownloadable));
 
-    let tmpProcessors = [...processors];
-    for (var processor of tmpProcessors) {
+    /* let tmpProcessors = [...processors];
+    for (const processor of tmpProcessors) {
       processor.config = btoa(processor.config);
       console.log(processors[0].config);
       formData.append('processors[]', JSON.stringify(processor));
@@ -239,184 +186,23 @@ const Dashboard = () => {
       });
     });
 
-    for (var pair of formData.entries()) {
+    for (const pair of formData.entries()) {
       console.log(pair[0] + ' - ' + pair[1]);
-    }
+    } */
   };
 
-  const toArray = (fileList: any) => {
+  /* const toArray = (fileList: any) => {
     return Array.prototype.slice.call(fileList);
-  };
+  }; */
 
   return (
     <Paper elevation={0} className={classes.root}>
       <Grid container justify="center" spacing={8}>
-        <Grid item container md={4} sm={12} xs={12}>
-          <Grid item container direction="column" alignItems="center">
-            <Grid item>
-              <Title title={TITLES[0].title} tooltip={TITLES[0].tooltip} />
-              <List>
-                {[...sources].map((source: File, index: number) => (
-                  <ListItem
-                    button
-                    key={`source_${index}`}
-                    disableGutters={true}
-                    className={source.name}
-                  >
-                    <ListItemAvatar>
-                      <Avatar className={classes.purple}>
-                        <DescriptionIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      className={classes.listItemText}
-                      secondary={getExtension(source.name).toUpperCase() + ' file'}
-                    >
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={classes.textPurple}
-                        color="textPrimary"
-                      >
-                        {trimFileExtension(source.name)}
-                      </Typography>
-                    </ListItemText>
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        edge="end"
-                        aria-label="delete"
-                        onClick={() => handleRemoveSource(source)}
-                      >
-                        <ClearIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
-            <Grid item>
-              <input
-                required
-                accept=".csv,.json,.nt,.ttl,.xml"
-                className={classes.input}
-                id="input-button-file"
-                type="file"
-                onChange={handleFilesUpload}
-                multiple
-              />
-              <label htmlFor="input-button-file">
-                <Button color="primary" component="span" className={classes.btnAdd}>
-                  <AddIcon /> Add a source
-                </Button>
-              </label>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item container md={4} sm={6} xs={12}>
-          <Grid item container direction="column" alignItems="center">
-            <Grid item>
-              <Title title={TITLES[1].title} tooltip={TITLES[1].tooltip} />
-            </Grid>
-            <Grid item>
-              <List>
-                {processors.map((processor: any, index: number) => (
-                  <ListItem
-                    button={true}
-                    key={`processor_${processor.id}`}
-                    disableGutters={true}
-                    onClick={() => handleProcessingClick(index)}
-                    className={`processor${processor.id}`}
-                  >
-                    <ListItemAvatar>
-                      <Avatar className={classes.orange}>
-                        {processor.category === 'mapper' ? <MapIcon /> : <TrackChangesIcon />}
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText
-                      className={classes.textOrange}
-                      primary={`${capitalizeFirstLetter(processor.category)} ${index + 1}`}
-                    />
-                    <ListItemSecondaryAction>
-                      <IconButton
-                        edge="end"
-                        aria-label="delete"
-                        onClick={() => handleRemoveProcessor(processor.id)}
-                      >
-                        <ClearIcon />
-                      </IconButton>
-                    </ListItemSecondaryAction>
-                    {processor.sources.map((source: any) => (
-                      <LineTo
-                        from={source}
-                        to={'processor' + processor.id}
-                        fromAnchor="center right"
-                        toAnchor="-5% 50%"
-                        borderColor="black"
-                        borderWidth={2}
-                        delay={100}
-                      />
-                    ))}
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
-            <Grid item>
-              <Button
-                color="primary"
-                component="span"
-                className={classes.btnAdd}
-                onClick={handleAddProcessor}
-              >
-                <AddIcon /> Add a processor
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item container md={4} sm={6} xs={12}>
-          <Grid item container direction="column" alignItems="center">
-            <Grid item>
-              <Title title={TITLES[2].title} tooltip={TITLES[2].tooltip} />
-            </Grid>
-            <Grid item>
-              <List>
-                {processors.map((processor: any) => (
-                  <ListItem
-                    onClick={() => handleTargetClick(processor.id)}
-                    button
-                    key={`target_${processor.id}`}
-                    className={`target${processor.id}`}
-                    disableGutters={true}
-                  >
-                    <ListItemAvatar>
-                      <Avatar className={classes.teal}>
-                        <DescriptionIcon />
-                      </Avatar>
-                    </ListItemAvatar>
-                    <ListItemText className={classes.listItemText}>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        className={classes.textTeal}
-                        color="textPrimary"
-                      >
-                        {getRdfByExtension(processor.target).name}
-                      </Typography>
-                    </ListItemText>
-                    <LineTo
-                      from={'processor' + processor.id}
-                      to={'target' + processor.id}
-                      fromAnchor="center right"
-                      toAnchor="-5% 50%"
-                      borderColor="black"
-                      borderWidth={2}
-                      delay={100}
-                    />
-                  </ListItem>
-                ))}
-              </List>
-            </Grid>
-          </Grid>
-        </Grid>
+        {
+          columns.map((column) => (
+            <Column updateColumn={handleUpdateColumn} column={column} />
+          ))
+        }
         <Grid item xs={12}>
           <Grid container justify="center" alignItems="center">
             <div className={classes.deploy}>
@@ -433,29 +219,7 @@ const Dashboard = () => {
         </Grid>
       </Grid>
 
-      <MyDialog
-        content={
-          <TextField
-            autoFocus
-            variant="outlined"
-            id="name"
-            label="Config"
-            multiline
-            size="medium"
-            rows={30}
-            onChange={handleChange}
-            defaultValue={getConfig(processors[processorIndex])}
-            fullWidth
-          />
-        }
-        onClose={handleProcessingClose}
-        onSave={handleProcessingSave}
-        open={isProcessingOpen}
-        save="Save"
-        title={'Mappings config'}
-      />
-
-      <MyDialog
+      {/* <MyDialog
         content={
           <List>
             {RDF_FILE_FORMATS.map((fileFormat: any) => (
@@ -477,7 +241,7 @@ const Dashboard = () => {
         onClose={handleTargetClose}
         open={isTargetOpen}
         title={'RDF file format'}
-      />
+      /> */}
 
       <MyDialog
         content={

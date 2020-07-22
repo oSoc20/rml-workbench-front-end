@@ -1,6 +1,6 @@
 export const MAPPER_DEFAULT = {
   id: 1,
-  category: 'mapper',
+  type: 'mapper',
   config: '',
   sources: [],
   target: '.nq',
