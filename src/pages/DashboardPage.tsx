@@ -163,8 +163,8 @@ const Dashboard = () => {
   return (
     <Paper elevation={0} className={classes.root}>
       <Grid container>
-        {columns.map((column) => (
-          <Column updateColumn={handleUpdateColumn} column={column} />
+        {columns.map((column, index: number) => (
+          <Column key={index} updateColumn={handleUpdateColumn} column={column} />
         ))}
         <Grid item xs={12}>
           <Grid container justify="center" alignItems="center">
