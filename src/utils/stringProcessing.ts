@@ -20,15 +20,6 @@ export function getRdfByExtension(extension: string) {
   return RDF_FILE_FORMATS.find((fileFormat: any) => fileFormat.extension === extension);
 }
 
-export function trimFilename(filename: string) {
-  return filename.replace(/^.*[\\\/]/, '');
-}
-
-export function isAlreadyAdded(filename: string, array: any[]) {
-  for (var element of array) {
-    if (element.name === filename) {
-      return true;
-    }
-  }
-  return false;
+export function trimFileExtension(filename: string) {
+  return filename.replace(/\.[^/.]+$/, '');
 }

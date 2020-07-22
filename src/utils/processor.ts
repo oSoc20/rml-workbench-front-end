@@ -3,7 +3,7 @@ import { MAPPER_DEFAULT } from '../constants/defaults';
 export function addProcessor(processors: any[]) {
   let newProcessor = Object.assign({}, MAPPER_DEFAULT);
   const lastId = getLastId(processors);
-  if (lastId != 0) {
+  if (lastId !== 0) {
     newProcessor.id = lastId + 1;
   }
   return processors.concat(newProcessor);
@@ -21,14 +21,14 @@ export function getConfig(processor: any) {
 }
 
 export function getLastId(processors: any[]) {
-  if (processors !== undefined && processors.length != 0) {
+  if (processors !== undefined && processors.length !== 0) {
     return processors[processors.length - 1].id;
   }
   return 0;
 }
 
 export function removeById(processors: any[], id: number) {
-  if (processors !== undefined || processors.length != 0) {
+  if (processors !== undefined || processors.length !== 0) {
     return processors.filter((processor: any) => processor.id !== id);
   }
   return [];

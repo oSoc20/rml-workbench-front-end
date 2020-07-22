@@ -33,13 +33,12 @@ import { TITLES } from '../constants/titles';
 import {
   capitalizeFirstLetter,
   getExtension,
-  getFilename,
   getRdfByExtension,
   getRdfFileFormat,
-  trimFilename,
+  trimFileExtension,
 } from '../utils/stringProcessing';
 import { addProcessor, getById, getConfig, removeById } from '../utils/processor';
-import { addSource, removeSource } from '../utils/source';
+import { removeSource } from '../utils/source';
 import LineTo from 'react-lineto';
 import { findSources } from '../utils/mapperConfig';
 
@@ -121,19 +120,24 @@ const Dashboard = () => {
     setProcessors(addProcessor(processors));
   };
 
-  const handleAddSource = (event: any) => {
-    if (event.target.files && event.target.files.length > 0) {
-      let sourcesCopy = sources;
+  const handleFilesUpload = (event: any) => {
+    if (event.target.files.length > 0 && sources.length === 0) {
+      setSources(event.target.files);
+    } else {
+      let sourcesArray = toArray(sources);
+      let tmp = [];
       for (var file of event.target.files) {
-        sourcesCopy = addSource(
-          {
-            name: getFilename(file.name),
-            extension: getExtension(file.name),
-          },
-          sourcesCopy,
-        );
+        if (
+          sourcesArray
+            .map((source: any) => {
+              return source.name;
+            })
+            .indexOf(file.name) === -1
+        ) {
+          tmp.push(file);
+        }
       }
-      setSources(sourcesCopy);
+      setSources(sourcesArray.concat(tmp));
     }
   };
 
@@ -151,7 +155,7 @@ const Dashboard = () => {
 
   const handleFileFormatClick = (fileFormat: any) => {
     let processor = getById(processors, currentTarget);
-    processor.target = getRdfFileFormat(fileFormat).extension;
+    processor.target = getRdfFileFormat(fileFormat)?.extension;
     setIsTargetOpen(false);
   };
 
@@ -192,6 +196,7 @@ const Dashboard = () => {
   const handleSettingsSave = () => {
     setIsDownloadable(isTmpExecutable);
     setIsExecutable(isTmpDownloadable);
+    sendData();
     setIsDeploySettings(false);
   };
 
@@ -204,6 +209,39 @@ const Dashboard = () => {
     setIsTargetOpen(false);
   };
 
+  const getBase64 = (file, cb) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+      cb(reader.result);
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+  };
+
+  const sendData = async () => {
+    let formData = new FormData();
+    formData.append('isExecutable', JSON.stringify(isExecutable));
+    formData.append('isDownloadable', JSON.stringify(isDownloadable));
+
+    for (var processor of processors) {
+      formData.append('processors[]', JSON.stringify(processor));
+    }
+
+    toArray(sources).forEach((source) => {
+      getBase64(source, (result: any) => {
+        formData.append('sources[]', result);
+      });
+    });
+
+    console.log(formData.getAll('sources[]'));
+  };
+
+  const toArray = (fileList: any) => {
+    return Array.prototype.slice.call(fileList);
+  };
+
   return (
     <Paper elevation={0} className={classes.root}>
       <Grid container justify="center" spacing={8}>
@@ -212,7 +250,7 @@ const Dashboard = () => {
             <Grid item>
               <Title title={TITLES[0].title} tooltip={TITLES[0].tooltip} />
               <List>
-                {sources.map((source: any, index: number) => (
+                {[...sources].map((source: File, index: number) => (
                   <ListItem
                     button
                     key={`source_${index}`}
@@ -226,7 +264,7 @@ const Dashboard = () => {
                     </ListItemAvatar>
                     <ListItemText
                       className={classes.listItemText}
-                      secondary={source.extension.toUpperCase() + ' file'}
+                      secondary={getExtension(source.name).toUpperCase() + ' file'}
                     >
                       <Typography
                         component="span"
@@ -234,7 +272,7 @@ const Dashboard = () => {
                         className={classes.textPurple}
                         color="textPrimary"
                       >
-                        {trimFilename(source.name)}
+                        {trimFileExtension(source.name)}
                       </Typography>
                     </ListItemText>
                     <ListItemSecondaryAction>
@@ -257,7 +295,7 @@ const Dashboard = () => {
                 className={classes.input}
                 id="input-button-file"
                 type="file"
-                onChange={handleAddSource}
+                onChange={handleFilesUpload}
                 multiple
               />
               <label htmlFor="input-button-file">

@@ -11,7 +11,7 @@
       "es2017",
       "dom"
     ],
-    "module": "ES6",
+    "module": "esnext",
     "newLine": "LF",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
@@ -26,7 +26,15 @@
     ],
     "jsx": "react",
     "moduleResolution": "node",
-    "sourceMap": true
+    "sourceMap": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true
   },
   "include": [
     "./src/**/*"
