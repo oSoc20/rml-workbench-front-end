@@ -54,7 +54,7 @@ const Navbar = () => {
   return (
     <AppBar position="static" className={classes.appBar} elevation={1}>
       <Toolbar>
-        <a href="#" className={classes.brand}>
+        <a href="/#" className={classes.brand}>
           <Avatar alt="Logo" src={logo} className={classes.large} />
         </a>
         <Typography variant="h6" className={classes.title}>
