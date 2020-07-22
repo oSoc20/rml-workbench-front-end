@@ -1,4 +1,26 @@
-body, html {
+a {
+  color: #2196f3;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:focus {
+    color: #1976d2;
+  }
+
+  &:hover {
+    color: #64b5f6;
+  }
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
   height: 100%;
   margin: 0;
 }

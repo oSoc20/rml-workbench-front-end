@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Router } from 'react-router-dom';
 import { CssBaseline, MuiThemeProvider, createStyles, makeStyles } from '@material-ui/core';
+
+import Navbar from './Navbar';
 import RouteHandler from '../routes/RouteHandler';
 import history from '../services/history';
 import theme from '../theme';
@@ -22,7 +24,10 @@ const App = () => {
       <Router history={history}>
         <MuiThemeProvider theme={theme}>
           <CssBaseline />
-          <RouteHandler />
+          <Navbar />
+          <main>
+            <RouteHandler />
+          </main>
         </MuiThemeProvider>
       </Router>
     </div>
