@@ -255,7 +255,7 @@ const Dashboard = () => {
                     button
                     key={`source_${index}`}
                     disableGutters={true}
-                    className={`${source.name}.${source.extension}`}
+                    className={source.name}
                   >
                     <ListItemAvatar>
                       <Avatar className={classes.purple}>
@@ -319,7 +319,7 @@ const Dashboard = () => {
                     key={`processor_${processor.id}`}
                     disableGutters={true}
                     onClick={() => handleProcessingClick(index)}
-                    className={`processor${processor.id} MuiListItem-secondaryAction`}
+                    className={`processor${processor.id}`}
                   >
                     <ListItemAvatar>
                       <Avatar className={classes.orange}>
