@@ -1,7 +1,8 @@
 import * as React from 'react';
+import { Router } from 'react-router-dom';
 import { CssBaseline, MuiThemeProvider, createStyles, makeStyles } from '@material-ui/core';
-
-import DashboardPage from '../pages/DashboardPage';
+import RouteHandler from '../routes/RouteHandler';
+import history from '../services/history';
 import theme from '../theme';
 
 const useStyles = makeStyles(() =>
@@ -18,10 +19,12 @@ const App = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        <DashboardPage />
-      </MuiThemeProvider>
+      <Router history={history}>
+        <MuiThemeProvider theme={theme}>
+          <CssBaseline />
+          <RouteHandler />
+        </MuiThemeProvider>
+      </Router>
     </div>
   );
 };
