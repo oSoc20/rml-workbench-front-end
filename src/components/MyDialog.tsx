@@ -46,6 +46,8 @@ const MyDialog = (props: MyDialogProps) => {
   const { content, onClose, onSave, open, save, title } = props;
   return (
     <Dialog
+      fullWidth={true}
+      maxWidth={'sm'}
       open={open}
       onClose={onClose}
       scroll={'paper'}

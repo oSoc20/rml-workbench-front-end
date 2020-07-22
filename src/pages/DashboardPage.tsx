@@ -281,7 +281,7 @@ const Dashboard = () => {
                     key={`processor_${processor.id}`}
                     disableGutters={true}
                     onClick={() => handleProcessingClick(index)}
-                    className={'processor' + processor.id}
+                    className={`processor${processor.id} MuiListItem-secondaryAction`}
                   >
                     <ListItemAvatar>
                       <Avatar className={classes.orange}>
@@ -340,6 +340,7 @@ const Dashboard = () => {
                     onClick={() => handleTargetClick(processor.id)}
                     button
                     key={`target_${processor.id}`}
+                    className={`target${processor.id}`}
                     disableGutters={true}
                   >
                     <ListItemAvatar>
@@ -357,6 +358,15 @@ const Dashboard = () => {
                         {getRdfByExtension(processor.target).name}
                       </Typography>
                     </ListItemText>
+                    <LineTo
+                      from={'processor' + processor.id}
+                      to={'target' + processor.id}
+                      fromAnchor="center right"
+                      toAnchor="-5% 50%"
+                      borderColor="black"
+                      borderWidth={2}
+                      delay={100}
+                    />
                   </ListItem>
                 ))}
               </List>
