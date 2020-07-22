@@ -75,7 +75,7 @@ const Column = ({ updateColumn, column }: ColumnProps) => {
 
   return (
     <>
-      <Grid item container md={4} sm={6} xs={12}>
+      <Grid item container xs={4}>
         <Grid item container direction="column" alignItems="center">
           <Grid item>
             <Title

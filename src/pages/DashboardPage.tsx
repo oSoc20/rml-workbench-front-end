@@ -13,8 +13,8 @@ import {
 import { deepOrange, purple, teal } from '@material-ui/core/colors';
 
 import MyDialog from '../components/MyDialog';
-import Column from "../components/Column";
-import {ComponentCategory} from "../constants/componentCategory";
+import Column from '../components/Column';
+import { ComponentCategory } from '../constants/componentCategory';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,7 +54,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       height: '100vh',
-      overflow: 'hidden',
       paddingTop: theme.spacing(8),
     },
     sourcesTitle: {
@@ -70,27 +69,30 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-const CONFIG_DEFAULT = [{
-  id: new Date().getMilliseconds(),
-  category: ComponentCategory.Source,
-  components: []
-}, {
-  id: new Date().getMilliseconds() + 1, // or unique hash in future
-  category: ComponentCategory.Processor,
-  components: [],
-}, {
-  id: new Date().getMilliseconds() + 2,
-  category: ComponentCategory.Target,
-  components: [],
-}];
+const CONFIG_DEFAULT = [
+  {
+    id: new Date().getMilliseconds(),
+    category: ComponentCategory.Source,
+    components: [],
+  },
+  {
+    id: new Date().getMilliseconds() + 1, // or unique hash in future
+    category: ComponentCategory.Processor,
+    components: [],
+  },
+  {
+    id: new Date().getMilliseconds() + 2,
+    category: ComponentCategory.Target,
+    components: [],
+  },
+];
 
 const Dashboard = () => {
   const classes = useStyles();
 
   const [isDeploySettingsOpen, setIsDeploySettings] = useState(false);
 
-  const [columns, setColumns] = useState([...CONFIG_DEFAULT.map((col) => ({...col}))]);
+  const [columns, setColumns] = useState([...CONFIG_DEFAULT.map((col) => ({ ...col }))]);
 
   const [isTmpDownloadable, setIsTmpDownloadable] = useState(false);
   const [isTmpExecutable, setIsTmpExecutable] = useState(false);
@@ -100,7 +102,7 @@ const Dashboard = () => {
   const handleUpdateColumn = (id, data) => {
     const newColumns = columns.map((col) => {
       if (col.id === id) {
-        return {...data};
+        return { ...data };
       }
       return col;
     });
@@ -197,12 +199,10 @@ const Dashboard = () => {
 
   return (
     <Paper elevation={0} className={classes.root}>
-      <Grid container justify="center" spacing={8}>
-        {
-          columns.map((column) => (
-            <Column updateColumn={handleUpdateColumn} column={column} />
-          ))
-        }
+      <Grid container>
+        {columns.map((column) => (
+          <Column updateColumn={handleUpdateColumn} column={column} />
+        ))}
         <Grid item xs={12}>
           <Grid container justify="center" alignItems="center">
             <div className={classes.deploy}>
