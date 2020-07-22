@@ -56,7 +56,7 @@ const MyDialog = (props: MyDialogProps) => {
     >
       <DialogTitle id="Dialog">{title}</DialogTitle>
       <DialogContent>
-        <Text content={children} />
+        <Text children={children} />
       </DialogContent>
       <ShouldDisplayActions onClose={onClose} onSave={onSave} save={save} />
     </Dialog>
