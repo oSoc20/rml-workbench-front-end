@@ -21,11 +21,11 @@ export function getRdfByExtension(extension: string) {
 }
 
 export function trimFilename(filename: string) {
-  return filename.replace(/^.*[\\\/]/, '');
+  return filename.replace(/^.*[\\/]/, '');
 }
 
 export function isAlreadyAdded(filename: string, array: any[]) {
-  for (var element of array) {
+  for (const element of array) {
     if (element.name === filename) {
       return true;
     }

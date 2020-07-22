@@ -119,10 +119,12 @@ const Dashboard = () => {
     setProcessors(addProcessor(processors));
   };
 
-  const handleAddSource = (event: any) => {
-    if (event.target.files && event.target.files.length > 0) {
+  const handleAddSource = (event: React.FormEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    if (target && target.files && target.files.length > 0) {
       let sourcesCopy = sources;
-      for (var file of event.target.files) {
+      // @ts-ignore
+      for (const file of target.files) {
         sourcesCopy = addSource(
           {
             name: getFilename(file.name),
@@ -149,7 +151,7 @@ const Dashboard = () => {
 
   const handleFileFormatClick = (fileFormat: any) => {
     let processor = getById(processors, currentTarget);
-    processor.target = getRdfFileFormat(fileFormat).extension;
+    processor.target = getRdfFileFormat(fileFormat)?.extension;
     setIsTargetOpen(false);
   };
 
