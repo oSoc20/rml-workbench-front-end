@@ -32,7 +32,7 @@ const ProcessorForm = ({ component, onUpdate, onClose }: FormProps) => {
 
   return (
     <MyDialog
-      content={
+      children={
         <>
           <TextField
             autoFocus

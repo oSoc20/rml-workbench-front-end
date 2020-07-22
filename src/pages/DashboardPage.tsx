@@ -182,7 +182,7 @@ const Dashboard = () => {
       </Grid>
 
       {/* <MyDialog
-        content={
+        children={
           <List>
             {RDF_FILE_FORMATS.map((fileFormat: any) => (
               <ListItem
@@ -206,7 +206,7 @@ const Dashboard = () => {
       /> */}
 
       <MyDialog
-        content={
+        children={
           <FormGroup>
             <FormControlLabel
               control={

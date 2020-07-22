@@ -59,7 +59,7 @@ const TargetForm = ({ component, onClose }: FormProps) => {
   const classes = useStyles();
   return (
     <MyDialog
-      content={
+      children={
         <List>
           {RDF_FILE_FORMATS.map((fileFormat: any) => (
             <ListItem button onClick={() => handleClick(fileFormat.name)} key={fileFormat.name}>

@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 interface MyDialogProps {
-  content: string | JSX.Element;
+  children: string | JSX.Element;
   onClose: any;
   onSave?: any;
   open: boolean;
@@ -35,15 +35,15 @@ const ShouldDisplayActions = (props: any) => {
 };
 
 const Text = (props: any) => {
-  const content = props.content;
-  if (typeof content === 'string') {
-    return <DialogContentText>{content}</DialogContentText>;
+  const children = props.children;
+  if (typeof children === 'string') {
+    return <DialogContentText>{children}</DialogContentText>;
   }
-  return <div>{content}</div>;
+  return <div>{children}</div>;
 };
 
 const MyDialog = (props: MyDialogProps) => {
-  const { content, onClose, onSave, open, save, title } = props;
+  const { children, onClose, onSave, open, save, title } = props;
   return (
     <Dialog
       fullWidth={true}
@@ -56,7 +56,7 @@ const MyDialog = (props: MyDialogProps) => {
     >
       <DialogTitle id="Dialog">{title}</DialogTitle>
       <DialogContent>
-        <Text content={content} />
+        <Text content={children} />
       </DialogContent>
       <ShouldDisplayActions onClose={onClose} onSave={onSave} save={save} />
     </Dialog>
