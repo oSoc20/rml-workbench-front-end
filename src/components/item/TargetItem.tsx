@@ -1,19 +1,19 @@
 import * as React from 'react';
 import {
-  Theme,
-  createStyles,
-  makeStyles,
+  Avatar,
   ListItem,
   ListItemAvatar,
-  Avatar,
   ListItemText,
+  Theme,
   Typography,
+  createStyles,
+  makeStyles,
 } from '@material-ui/core';
-
 import { teal } from '@material-ui/core/colors';
+import DescriptionIcon from '@material-ui/icons/Description';
+
 import { ComponentProps } from './ComponentItem';
 import { getRdfByExtension } from '../../utils/stringProcessing';
-import DescriptionIcon from '@material-ui/icons/Description';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TargetItem = ({ component, onUpdate }: ComponentProps) => {
   const classes = useStyles();
-
   return (
     <ListItem
       button={true}

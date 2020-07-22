@@ -1,22 +1,22 @@
 import * as React from 'react';
 import {
-  Theme,
-  createStyles,
-  makeStyles,
+  Avatar,
+  IconButton,
   ListItem,
   ListItemAvatar,
-  Avatar,
-  ListItemText,
-  Typography,
   ListItemSecondaryAction,
-  IconButton,
+  ListItemText,
+  Theme,
+  Typography,
+  createStyles,
+  makeStyles,
 } from '@material-ui/core';
-
 import { purple } from '@material-ui/core/colors';
+import ClearIcon from '@material-ui/icons/Clear';
+import DescriptionIcon from '@material-ui/icons/Description';
+
 import { ComponentProps } from './ComponentItem';
 import { getExtension, trimFileExtension } from '../../utils/stringProcessing';
-import DescriptionIcon from '@material-ui/icons/Description';
-import ClearIcon from '@material-ui/icons/Clear';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,7 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SourceItem = ({ component, onUpdate, onRemove }: ComponentProps) => {
   const classes = useStyles();
-
   return (
     <ListItem
       button={true}

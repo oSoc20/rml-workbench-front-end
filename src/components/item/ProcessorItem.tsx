@@ -1,19 +1,20 @@
 import * as React from 'react';
 import {
+  Avatar,
   Theme,
-  createStyles,
-  makeStyles,
   ListItem,
   ListItemAvatar,
-  Avatar,
-  ListItemText,
   ListItemSecondaryAction,
+  ListItemText,
   IconButton,
+  createStyles,
+  makeStyles,
 } from '@material-ui/core';
+import { deepOrange } from '@material-ui/core/colors';
+import ClearIcon from '@material-ui/icons/Clear';
 import MapIcon from '@material-ui/icons/Map';
 import TrackChangesIcon from '@material-ui/icons/TrackChanges';
-import ClearIcon from '@material-ui/icons/Clear';
-import { deepOrange } from '@material-ui/core/colors';
+
 import { ComponentProps } from './ComponentItem';
 import { capitalizeFirstLetter } from '../../utils/stringProcessing';
 
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ProcessorItem = ({ component, onUpdate, onRemove, index }: ComponentProps) => {
   const classes = useStyles();
-
   return (
     <ListItem
       button={true}

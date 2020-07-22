@@ -1,9 +1,9 @@
-import * as React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { TextField } from '@material-ui/core';
+
+import { ComponentCategory } from '../../constants/componentCategory';
 import { FormProps } from './ComponentForm';
 import MyDialog from '../MyDialog';
-import { ComponentCategory } from '../../constants/componentCategory';
 
 const DEFAULT = {
   type: 'mapper',

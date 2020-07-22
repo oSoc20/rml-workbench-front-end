@@ -1,17 +1,18 @@
 import * as React from 'react';
-import {ComponentCategory} from "../../constants/componentCategory";
-import ProcessorItem from "./ProcessorItem";
-import TargetItem from "./TargetItem";
-import SourceItem from "./SourceItem";
+
+import { ComponentCategory } from '../../constants/componentCategory';
+import ProcessorItem from './ProcessorItem';
+import SourceItem from './SourceItem';
+import TargetItem from './TargetItem';
 
 export interface ComponentProps {
-  onUpdate: (data: any) => void,
-  onRemove: (id: number) => void,
   component: any;
-  index: number,
+  index: number;
+  onRemove: (id: number) => void;
+  onUpdate: (data: any) => void;
 }
 
-const ComponentItem = (props : ComponentProps) => {
+const ComponentItem = (props: ComponentProps) => {
   const { category } = props.component;
   if (category === ComponentCategory.Target) {
     return <TargetItem {...props} />;
@@ -20,7 +21,6 @@ const ComponentItem = (props : ComponentProps) => {
   } else if (category === ComponentCategory.Source) {
     return <SourceItem {...props} />;
   }
-
   return null;
 };
 
