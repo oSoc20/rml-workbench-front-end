@@ -14,7 +14,7 @@ const useStyles = makeStyles(() =>
   }),
 );
 
-const isAddAllowed = (category) => {
+const isAddAllowed = (category: any) => {
   if (category === ComponentCategory.Processor || category === ComponentCategory.Source) {
     return true;
   }
