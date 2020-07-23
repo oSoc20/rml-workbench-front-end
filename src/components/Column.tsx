@@ -22,11 +22,11 @@ const isAddAllowed = (category: any) => {
 };
 
 interface ColumnProps {
-  updateColumn: (id: number, data: any) => void;
   column: any;
+  updateColumn: (id: number, data: any) => void;
 }
 
-const Column = ({ updateColumn, column }: ColumnProps) => {
+const Column = ({ column, updateColumn }: ColumnProps) => {
   const classes = useStyles();
 
   const [detail, setDetail] = useState();
