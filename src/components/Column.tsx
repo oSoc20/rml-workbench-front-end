@@ -1,12 +1,12 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { createStyles, makeStyles, Grid, List, Button } from '@material-ui/core';
-import Title from './Title';
 import AddIcon from '@material-ui/icons/Add';
+
 import { Columns } from '../constants/columns';
-import ComponentItem from './item/ComponentItem';
 import { ComponentCategory } from '../constants/componentCategory';
-import { useState } from 'react';
 import ComponentForm from './form/ComponentForm';
+import ComponentItem from './item/ComponentItem';
+import Title from './Title';
 
 const useStyles = makeStyles(() =>
   createStyles({
