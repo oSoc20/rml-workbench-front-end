@@ -35,21 +35,6 @@ const Title = (props: TitleProps) => {
   const [isEditing, setEditing] = useState(false);
   const [title, setTitle] = useState(column.name);
 
-  const handleSaveTitle = () => {
-    setEditing(false);
-    if (title.length !== 0) {
-      const data = { ...column };
-      data.name = title;
-      onUpdate(data);
-    } else {
-      setTitle(column.name);
-    }
-  };
-
-  const handleEditTitle = () => {
-    setEditing(true);
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
   };
@@ -57,6 +42,21 @@ const Title = (props: TitleProps) => {
   const handleCloseEditing = () => {
     setEditing(false);
     setTitle(column.name);
+  };
+
+  const handleEditTitle = () => {
+    setEditing(true);
+  };
+
+  const handleSaveTitle = () => {
+    setEditing(false);
+    if (title.length !== 0 && title.length < 20) {
+      const data = { ...column };
+      data.name = title;
+      onUpdate(data);
+    } else {
+      setTitle(column.name);
+    }
   };
 
   if (isEditing) {
@@ -68,6 +68,7 @@ const Title = (props: TitleProps) => {
           value={title}
           onChange={handleChange}
           className={classes.textField}
+          inputProps={{ maxLength: 20 }}
         />
         <Button onClick={handleCloseEditing}>
           <ClearIcon />
