@@ -35,7 +35,7 @@ const Column = ({ updateColumn, column }: ColumnProps) => {
     updateColumn(column.id, data);
   };
 
-  const handleUpdate = (component) => {
+  const handleUpdate = (component: any) => {
     // close dialog if necessary
     if (detail) {
       setDetail(null);
