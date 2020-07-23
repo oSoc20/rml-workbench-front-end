@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       fontSize: '1.5625em',
     },
+    root: {
+      minHeight: theme.spacing(8),
+    },
+    textField: {
+      marginLeft: theme.spacing(16),
+    },
   }),
 );
 
@@ -27,39 +33,44 @@ const Title = (props: TitleProps) => {
   const { column, onUpdate, tooltip } = props;
 
   const [isEditing, setEditing] = useState(false);
-  // important, start with current column name
   const [title, setTitle] = useState(column.name);
 
-  const handleSaveTitle = () => {
-    const data = { ...column };
-    data.name = title;
-    onUpdate(data);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value);
+  };
+
+  const handleCloseEditing = () => {
     setEditing(false);
+    setTitle(column.name);
   };
 
   const handleEditTitle = () => {
     setEditing(true);
   };
 
-  const handleCloseEditing = () => {
+  const handleSaveTitle = () => {
     setEditing(false);
-  };
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(event.target.value);
+    if (title.length !== 0 && title.length < 20) {
+      const data = { ...column };
+      data.name = title;
+      onUpdate(data);
+    } else {
+      setTitle(column.name);
+    }
   };
 
   if (isEditing) {
     return (
-      <div>
+      <div className={classes.root}>
         <TextField
           name="name"
-          label="New title"
           placeholder={column.name}
           value={title}
           onChange={handleChange}
+          className={classes.textField}
+          inputProps={{ maxLength: 20 }}
         />
-        <Button color="primary" onClick={handleCloseEditing}>
+        <Button onClick={handleCloseEditing}>
           <ClearIcon />
         </Button>
         <Button color="primary" onClick={handleSaveTitle}>
@@ -69,12 +80,14 @@ const Title = (props: TitleProps) => {
     );
   } else {
     return (
-      <Button className={classes.button} onClick={() => handleEditTitle()}>
-        {column.name}
-        <Tooltip title={tooltip}>
-          <sup className={classes.areaExplaination}>?</sup>
-        </Tooltip>
-      </Button>
+      <div className={classes.root}>
+        <Button className={classes.button} onClick={() => handleEditTitle()}>
+          {column.name}
+          <Tooltip title={tooltip}>
+            <sup className={classes.areaExplaination}>?</sup>
+          </Tooltip>
+        </Button>
+      </div>
     );
   }
 };
