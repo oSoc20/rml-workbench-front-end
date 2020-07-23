@@ -11,7 +11,7 @@ const DEFAULT = {
   config: '',
 };
 
-const ProcessorForm = ({ component, onUpdate, onClose }: FormProps) => {
+const ProcessorForm = ({ component, onClose, onUpdate }: FormProps) => {
   const [data, setData] = useState({
     ...DEFAULT,
     ...component,

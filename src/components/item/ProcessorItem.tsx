@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const ProcessorItem = ({ component, onUpdate, onRemove, index }: ComponentProps) => {
+const ProcessorItem = ({ component, index, onRemove, onUpdate }: ComponentProps) => {
   const classes = useStyles();
   return (
     <ListItem
