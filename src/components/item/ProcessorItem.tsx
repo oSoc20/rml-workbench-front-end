@@ -52,6 +52,9 @@ const ProcessorItem = ({ component, index, onRemove, onUpdate }: ComponentProps)
           <ClearIcon />
         </IconButton>
       </ListItemSecondaryAction>
+      {
+        component.target
+      }
       {/*processor.sources.map((source: any) => (
         <LineTo
           from={source}

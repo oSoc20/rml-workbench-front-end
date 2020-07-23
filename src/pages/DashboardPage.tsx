@@ -15,6 +15,7 @@ import MyDialog from '../components/MyDialog';
 import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
 import {Columns} from "../constants/columns";
+import {findSources} from "../utils/mapperConfig";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -33,38 +34,66 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const CONFIG_DEFAULT = [
+const CONFIG_DEFAULT = {
+  download: true,
+  execute: false,
+};
+
+const COLUMNS_DEFAULT = [
   {
-    id: new Date().getMilliseconds(),
+    id: new Date().getTime(),
     name: Columns[ComponentCategory.Source].title,
     category: ComponentCategory.Source,
     components: [],
   },
   {
-    id: new Date().getMilliseconds() + 1, // or unique hash in future
+    id: new Date().getTime() + 1, // or unique hash in future
     name: Columns[ComponentCategory.Processor].title,
     category: ComponentCategory.Processor,
     components: [],
   },
-  {
-    id: new Date().getMilliseconds() + 2,
-    name: Columns[ComponentCategory.Target].title,
-    category: ComponentCategory.Target,
-    components: [],
-  },
 ];
+
+const getAllComponentsByCategory = (columns, category) => {
+  // get all components of a specific category over multiple columns
+  return columns
+    .filter((col) => col.category === category)
+    .reduce((arr, col) => ([...arr, ...col.components]), []);
+}
+
+const updateConfig = (config, columns) => {
+  const newConfig = {...config};
+
+  const sources = getAllComponentsByCategory(columns, ComponentCategory.Source);
+  const processors = getAllComponentsByCategory(columns, ComponentCategory.Processor);
+
+  newConfig.processors = processors.map((processor) => {
+    if (processor.type === 'mapper') {
+      const sourceIds = findSources(processor.config)
+        .map((fileName) => sources.find((s) => s.file?.name === fileName)?.id)
+        .map((id) => !id); // only keep the ones that exist as a source
+
+      return {
+        ...processor,
+        sources: sourceIds,
+      }
+    }
+    return processor;
+  });
+
+  newConfig.sources = sources;
+
+  return newConfig;
+};
 
 const Dashboard = () => {
   const classes = useStyles();
 
   const [isDeploySettingsOpen, setIsDeploySettings] = useState(false);
 
-  const [columns, setColumns] = useState([...CONFIG_DEFAULT.map((col) => ({ ...col }))]);
+  const [columns, setColumns] = useState([...COLUMNS_DEFAULT.map((col) => ({ ...col }))]);
 
-  const [isTmpDownloadable, setIsTmpDownloadable] = useState(false);
-  const [isTmpExecutable, setIsTmpExecutable] = useState(false);
-  const [isExecutable, setIsExecutable] = useState(false);
-  const [isDownloadable, setIsDownloadable] = useState(false);
+  const [config, setConfig] = useState({...CONFIG_DEFAULT});
 
   const handleUpdateColumn = (id, data) => {
     const newColumns = columns.map((col) => {
@@ -73,10 +102,12 @@ const Dashboard = () => {
       }
       return col;
     });
+    const newConfig = updateConfig(config, newColumns);
 
-    // TODO save to localStorage (all projects) + processColumns to check if every processor has a target with same id
-
+    setConfig(newConfig);
     setColumns(newColumns);
+
+    // TODO save to localStorage
   };
 
   /* const handleFilesUpload = (event: any) => {
@@ -100,27 +131,18 @@ const Dashboard = () => {
     }
   }; */
 
-  const handleChangeSettings = (setting: string) => (event: any) => {
-    if (setting === 'isTmpDownloadable') {
-      setIsTmpDownloadable(event.target.checked);
-    } else {
-      setIsTmpExecutable(event.target.checked);
-    }
+  const handleSettingsChange = (event: any) => {
+    setConfig({
+      ...config,
+      [event.target.name]: event.target.checked,
+    })
   };
 
-  const handleSettings = () => {
-    setIsDeploySettings(true);
-  };
-
-  const handleSettingsClose = () => {
-    setIsTmpDownloadable(isDownloadable);
-    setIsTmpExecutable(isExecutable);
-    setIsDeploySettings(false);
+  const setDeploySettingsOpen = (open) => {
+    setIsDeploySettings(open);
   };
 
   const handleSettingsSave = () => {
-    setIsDownloadable(isTmpExecutable);
-    setIsExecutable(isTmpDownloadable);
     sendData();
     setIsDeploySettings(false);
   };
@@ -138,8 +160,6 @@ const Dashboard = () => {
 
   const sendData = async () => {
     let formData = new FormData();
-    formData.append('isExecutable', JSON.stringify(isExecutable));
-    formData.append('isDownloadable', JSON.stringify(isDownloadable));
 
     /* let tmpProcessors = [...processors];
     for (const processor of tmpProcessors) {
@@ -160,10 +180,6 @@ const Dashboard = () => {
     } */
   };
 
-  /* const toArray = (fileList: any) => {
-    return Array.prototype.slice.call(fileList);
-  }; */
-
   return (
     <Paper elevation={0} className={classes.root}>
       <Grid container>
@@ -177,7 +193,7 @@ const Dashboard = () => {
                 variant="contained"
                 color="primary"
                 size="large"
-                onClick={() => handleSettings()}
+                onClick={() => setDeploySettingsOpen(true)}
               >
                 Deploy
               </Button>
@@ -186,39 +202,15 @@ const Dashboard = () => {
         </Grid>
       </Grid>
 
-      {/* <MyDialog
-        children={
-          <List>
-            {RDF_FILE_FORMATS.map((fileFormat: any) => (
-              <ListItem
-                button
-                onClick={() => handleFileFormatClick(fileFormat.name)}
-                key={fileFormat.name}
-              >
-                <ListItemAvatar>
-                  <Avatar className={classes.teal}>
-                    <DescriptionIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={fileFormat.name} />
-              </ListItem>
-            ))}
-          </List>
-        }
-        onClose={handleTargetClose}
-        open={isTargetOpen}
-        title={'RDF file format'}
-      /> */}
-
       <MyDialog
         children={
           <FormGroup>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isTmpExecutable}
-                  onChange={handleChangeSettings('isTmpExecutable')}
-                  name="isExecutable"
+                  checked={config.execute}
+                  onChange={handleSettingsChange}
+                  name="execute"
                   color="primary"
                 />
               }
@@ -227,9 +219,9 @@ const Dashboard = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isTmpDownloadable}
-                  onChange={handleChangeSettings('isTmpDownloadable')}
-                  name="isDownloadable"
+                  checked={config.download}
+                  onChange={handleSettingsChange}
+                  name="download"
                   color="primary"
                 />
               }
@@ -237,7 +229,7 @@ const Dashboard = () => {
             />
           </FormGroup>
         }
-        onClose={handleSettingsClose}
+        onClose={() => setDeploySettingsOpen(false)}
         onSave={handleSettingsSave}
         open={isDeploySettingsOpen}
         save={'Deploy'}
