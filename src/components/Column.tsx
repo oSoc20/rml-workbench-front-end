@@ -44,7 +44,7 @@ const Column = ({ updateColumn, column }: ColumnProps) => {
     const data = { ...column };
     if (component.id) {
       // existing, replace
-      data.components = data.components.map((c) => {
+      data.components = data.components.map((c: any) => {
         if (c.id === component.id) {
           return component;
         }
@@ -65,7 +65,7 @@ const Column = ({ updateColumn, column }: ColumnProps) => {
 
   const handleRemove = (id: number) => {
     const data = { ...column };
-    data.components = data.components.filter((component) => component.id !== id);
+    data.components = data.components.filter((component: any) => component.id !== id);
     handleUpdateColumn(data);
   };
 
