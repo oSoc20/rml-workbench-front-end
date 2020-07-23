@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+import { useParams, Redirect } from 'react-router-dom';
 import {
   Button,
   Checkbox,
@@ -16,6 +17,7 @@ import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
 import {Columns} from "../constants/columns";
 import {findSources} from "../utils/mapperConfig";
+import {getProjects, saveProject} from "../utils/ProjectStorage";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,26 +36,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const CONFIG_DEFAULT = {
-  download: true,
-  execute: false,
-};
-
-const COLUMNS_DEFAULT = [
-  {
-    id: new Date().getTime(),
-    name: Columns[ComponentCategory.Source].title,
-    category: ComponentCategory.Source,
-    components: [],
-  },
-  {
-    id: new Date().getTime() + 1, // or unique hash in future
-    name: Columns[ComponentCategory.Processor].title,
-    category: ComponentCategory.Processor,
-    components: [],
-  },
-];
-
 const getAllComponentsByCategory = (columns, category) => {
   // get all components of a specific category over multiple columns
   return columns
@@ -71,7 +53,7 @@ const updateConfig = (config, columns) => {
     if (processor.type === 'mapper') {
       const sourceIds = findSources(processor.config)
         .map((fileName) => sources.find((s) => s.file?.name === fileName)?.id)
-        .map((id) => !id); // only keep the ones that exist as a source
+        .filter((id) => !id); // only keep the ones that exist as a source
 
       return {
         ...processor,
@@ -86,14 +68,25 @@ const updateConfig = (config, columns) => {
   return newConfig;
 };
 
-const Dashboard = () => {
+const DashboardPage = () => {
+  const { id } = useParams();
+
+  const project = useMemo(() => getProjects()[id], [id]);
+
+  if (!project) {
+    return <Redirect to="/" />;
+  }
+
+  return <Dashboard key={id} project={project} />;
+};
+
+const Dashboard = ({ project }) => {
   const classes = useStyles();
 
   const [isDeploySettingsOpen, setIsDeploySettings] = useState(false);
 
-  const [columns, setColumns] = useState([...COLUMNS_DEFAULT.map((col) => ({ ...col }))]);
-
-  const [config, setConfig] = useState({...CONFIG_DEFAULT});
+  const [columns, setColumns] = useState(project.columns);
+  const [config, setConfig] = useState(project.config);
 
   const handleUpdateColumn = (id, data) => {
     const newColumns = columns.map((col) => {
@@ -106,9 +99,15 @@ const Dashboard = () => {
 
     setConfig(newConfig);
     setColumns(newColumns);
-
-    // TODO save to localStorage
   };
+
+  useEffect(() => {
+    saveProject(project.id, {
+      ...project,
+      config,
+      columns,
+    })
+  }, [columns, config]);
 
   /* const handleFilesUpload = (event: any) => {
     if (event.target.files.length > 0 && sources.length === 0) {
@@ -239,4 +238,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;

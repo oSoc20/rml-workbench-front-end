@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import ProjectPage from '../pages/ProjectPage';
 import DashboardPage from '../pages/DashboardPage';
@@ -9,7 +9,8 @@ export default class RouteHandler extends React.Component {
     return (
       <Switch>
         <Route path="/" exact component={ProjectPage} />
-        <Route path="/dashboard" exact component={DashboardPage} />
+        <Route path="/:id/dashboard" exact component={DashboardPage} />
+        <Redirect to="/" />
       </Switch>
     );
   }

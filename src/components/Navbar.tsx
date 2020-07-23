@@ -69,9 +69,6 @@ const Navbar = () => {
           <Link to="/" className={classes.itemLink}>
             Home
           </Link>
-          <Link to="/dashboard" className={classes.itemLink}>
-            Dashboard
-          </Link>
         </nav>
       </Toolbar>
     </AppBar>
