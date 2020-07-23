@@ -79,7 +79,8 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
         <Grid item container direction="column" alignItems="center">
           <Grid item>
             <Title
-              title={column.name}
+              column={column}
+              onUpdate={handleUpdateColumn}
               tooltip={Columns[column.category].tooltip}
             />
           </Grid>
