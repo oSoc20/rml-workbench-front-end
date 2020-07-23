@@ -32,3 +32,15 @@ export const RDF_FILE_FORMATS = [
     name: 'Turtle',
   },
 ];
+
+export const MAPPER_CONFIG = [
+  {
+    type: 'mapper',
+  },
+];
+
+export const INPUT_CONFIG = [
+  {
+    type: 'file',
+  },
+];

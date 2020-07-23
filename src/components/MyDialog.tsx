@@ -7,7 +7,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
-import MyForm from './FormControl';
+import SelectComponent from './SelectComponent';
 
 interface MyDialogProps {
   content: string | JSX.Element;
@@ -45,6 +45,7 @@ const Text = (props: any) => {
 
 const MyDialog = (props: MyDialogProps) => {
   const { content, onClose, onSave, open, save, title } = props;
+  console.log(props);
   return (
     <Dialog
       fullWidth={true}
@@ -57,7 +58,7 @@ const MyDialog = (props: MyDialogProps) => {
     >
       <DialogTitle id="Dialog">{title}</DialogTitle>
       <DialogContent>
-        <MyForm />
+        <SelectComponent title={title} />
         <Text content={content} />
       </DialogContent>
       <ShouldDisplayActions onClose={onClose} onSave={onSave} save={save} />
