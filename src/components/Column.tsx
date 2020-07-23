@@ -79,7 +79,7 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
         <Grid item container direction="column" alignItems="center">
           <Grid item>
             <Title
-              title={Columns[column.category].title}
+              title={column.name}
               tooltip={Columns[column.category].tooltip}
             />
           </Grid>

@@ -14,6 +14,7 @@ import {
 import MyDialog from '../components/MyDialog';
 import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
+import {Columns} from "../constants/columns";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,16 +36,19 @@ const useStyles = makeStyles((theme: Theme) =>
 const CONFIG_DEFAULT = [
   {
     id: new Date().getMilliseconds(),
+    name: Columns[ComponentCategory.Source].title,
     category: ComponentCategory.Source,
     components: [],
   },
   {
     id: new Date().getMilliseconds() + 1, // or unique hash in future
+    name: Columns[ComponentCategory.Processor].title,
     category: ComponentCategory.Processor,
     components: [],
   },
   {
     id: new Date().getMilliseconds() + 2,
+    name: Columns[ComponentCategory.Target].title,
     category: ComponentCategory.Target,
     components: [],
   },
