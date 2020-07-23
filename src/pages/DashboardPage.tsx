@@ -15,7 +15,6 @@ import {
 import MyDialog from '../components/MyDialog';
 import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
-import {Columns} from "../constants/columns";
 import {findSources} from "../utils/mapperConfig";
 import {getProjects, saveProject} from "../utils/ProjectStorage";
 
@@ -107,7 +106,7 @@ const Dashboard = ({ project }) => {
       config,
       columns,
     })
-  }, [columns, config]);
+  }, [columns, config, project]);
 
   /* const handleFilesUpload = (event: any) => {
     if (event.target.files.length > 0 && sources.length === 0) {
