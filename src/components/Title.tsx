@@ -42,6 +42,7 @@ const Title = (props: TitleProps) => {
   };
 
   const handleCloseEditing = () => {
+    setTitle(column.name);
     setEditing(false);
   };
 
