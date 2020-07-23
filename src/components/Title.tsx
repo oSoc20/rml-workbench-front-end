@@ -53,13 +53,7 @@ const Title = (props: TitleProps) => {
   if (isEditing) {
     return (
       <div>
-        <TextField
-          name="name"
-          label="New title"
-          placeholder={column.name}
-          value={title}
-          onChange={handleChange}
-        />
+        <TextField name="name" placeholder={column.name} value={title} onChange={handleChange} />
         <Button color="primary" onClick={handleCloseEditing}>
           <ClearIcon />
         </Button>
