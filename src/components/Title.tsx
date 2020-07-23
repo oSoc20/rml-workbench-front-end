@@ -37,9 +37,13 @@ const Title = (props: TitleProps) => {
 
   const handleSaveTitle = () => {
     setEditing(false);
-    const data = { ...column };
-    data.name = title;
-    onUpdate(data);
+    if (title.length !== 0) {
+      const data = { ...column };
+      data.name = title;
+      onUpdate(data);
+    } else {
+      setTitle(column.name);
+    }
   };
 
   const handleEditTitle = () => {
