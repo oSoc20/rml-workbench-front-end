@@ -27,27 +27,26 @@ const Title = (props: TitleProps) => {
   const { column, onUpdate, tooltip } = props;
 
   const [isEditing, setEditing] = useState(false);
-  // important, start with current column name
   const [title, setTitle] = useState(column.name);
 
   const handleSaveTitle = () => {
+    setEditing(false);
     const data = { ...column };
     data.name = title;
     onUpdate(data);
-    setEditing(false);
   };
 
   const handleEditTitle = () => {
     setEditing(true);
   };
 
-  const handleCloseEditing = () => {
-    setTitle(column.name);
-    setEditing(false);
-  };
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
+  };
+
+  const handleCloseEditing = () => {
+    setEditing(false);
+    setTitle(column.name);
   };
 
   if (isEditing) {
