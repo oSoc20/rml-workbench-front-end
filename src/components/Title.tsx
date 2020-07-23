@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme: Theme) =>
     button: {
       fontSize: '1.5625em',
     },
+    root: {
+      minHeight: theme.spacing(8),
+    },
+    textField: {
+      marginLeft: theme.spacing(16),
+    },
   }),
 );
 
@@ -51,9 +57,15 @@ const Title = (props: TitleProps) => {
 
   if (isEditing) {
     return (
-      <div>
-        <TextField name="name" placeholder={column.name} value={title} onChange={handleChange} />
-        <Button color="primary" onClick={handleCloseEditing}>
+      <div className={classes.root}>
+        <TextField
+          name="name"
+          placeholder={column.name}
+          value={title}
+          onChange={handleChange}
+          className={classes.textField}
+        />
+        <Button onClick={handleCloseEditing}>
           <ClearIcon />
         </Button>
         <Button color="primary" onClick={handleSaveTitle}>
@@ -63,12 +75,14 @@ const Title = (props: TitleProps) => {
     );
   } else {
     return (
-      <Button className={classes.button} onClick={() => handleEditTitle()}>
-        {column.name}
-        <Tooltip title={tooltip}>
-          <sup className={classes.areaExplaination}>?</sup>
-        </Tooltip>
-      </Button>
+      <div className={classes.root}>
+        <Button className={classes.button} onClick={() => handleEditTitle()}>
+          {column.name}
+          <Tooltip title={tooltip}>
+            <sup className={classes.areaExplaination}>?</sup>
+          </Tooltip>
+        </Button>
+      </div>
     );
   }
 };
