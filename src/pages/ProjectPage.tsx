@@ -27,6 +27,14 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       alignItems: 'center',
     },
+    list: {
+      width: '100%',
+      maxWidth: 500,
+      position: 'relative',
+      overflow: 'auto',
+      maxHeight: 290,
+      backgroundColor: theme.palette.background.paper,
+    },
   }),
 );
 
@@ -92,17 +100,20 @@ const Project = () => {
       <Typography component="h1" variant="h5" gutterBottom>
         RML.io Dashboard
       </Typography>
-      <List>
+      <List className={classes.list}>
         {Object.keys(projects).map((project: any, index: number) => (
-          <ProjectItem
-            key={index}
-            name={displayProject(projects[project])}
-            onClick={() => handleOpenProject(projects[project])}
-            onRemove={() => handleRemoveProject(projects[project])}
-          />
+          <div>
+            <ProjectItem
+              key={index}
+              name={displayProject(projects[project])}
+              onClick={() => handleOpenProject(projects[project])}
+              onRemove={() => handleRemoveProject(projects[project])}
+            />
+            <Divider variant="inset" component="li" light />
+          </div>
         ))}
       </List>
-      <Divider variant="middle" />
+      <Divider />
       <Button
         variant="contained"
         color="primary"
