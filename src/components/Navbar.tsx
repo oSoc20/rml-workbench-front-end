@@ -11,8 +11,6 @@ import {
 } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 
-// import logo from '/%PUBLIC_URL%rml-io-dashboard.svg';
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appBar: {
