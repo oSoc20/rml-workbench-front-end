@@ -11,6 +11,14 @@
     "@types/node": "^14.0.24",
     "@types/react": "^16.9.43",
     "@types/react-dom": "^16.9.8",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.2.5",
+    "moment": "^2.27.0",
+    "node-sass": "^4.14.1",
+    "prettier": "^2.0.5",
+    "pretty-quick": "^2.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-lineto": "^3.2.0",
@@ -43,16 +51,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/history": "^4.7.6",
-    "@types/react-router-dom": "^5.1.5",
-    "eslint-config-prettier": "^6.11.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-prettier": "^3.1.4",
-    "husky": "^4.2.5",
-    "node-sass": "^4.14.1",
-    "prettier": "^2.0.5",
-    "pretty-quick": "^2.0.1"
   }
 }
