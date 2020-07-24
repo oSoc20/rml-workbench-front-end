@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       overflow: 'auto',
       maxHeight: 290,
-      backgroundColor: theme.palette.background.paper,
     },
   }),
 );
