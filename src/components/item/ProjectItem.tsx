@@ -6,6 +6,7 @@ import {
   ListItemAvatar,
   ListItemSecondaryAction,
   ListItemText,
+  Theme,
   createStyles,
   makeStyles,
 } from '@material-ui/core';
@@ -31,7 +32,7 @@ const ProjectItem = (props: ProjectItemProps) => {
   const classes = useStyles();
   const { name, onClick, onRemove } = props;
   return (
-    <ListItem onClick={onClick}>
+    <ListItem button onClick={onClick}>
       <ListItemAvatar>
         <Avatar>
           <FolderIcon />
