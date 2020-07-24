@@ -1,10 +1,20 @@
+import moment from 'moment';
 import React from 'react';
-import { Button, Divider, Theme, Typography, createStyles, makeStyles } from '@material-ui/core';
+import {
+  Button,
+  Divider,
+  List,
+  Theme,
+  Typography,
+  createStyles,
+  makeStyles,
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { redirectTo } from '../services/history';
-import {getProjects, saveProject} from "../utils/ProjectStorage";
-import {Columns} from "../constants/columns";
-import {ComponentCategory} from "../constants/componentCategory";
+import { getProjects, saveProject, saveProjects } from '../utils/ProjectStorage';
+import ProjectItem from '../components/item/ProjectItem';
+import { Columns } from '../constants/columns';
+import { ComponentCategory } from '../constants/componentCategory';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,7 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
 
 const CONFIG_DEFAULT = {
   download: true,
@@ -43,7 +52,13 @@ const COLUMNS_DEFAULT = [
 
 const PROJECT_DEFAULT = {
   columns: [...COLUMNS_DEFAULT.map((col) => ({ ...col }))],
-  config: {...CONFIG_DEFAULT},
+  config: { ...CONFIG_DEFAULT },
+};
+
+const displayProject = (project: any) => {
+  const projectId = project.id.split('_')[1];
+  const timestamp = moment(Number(project.createdAt)).valueOf();
+  return `Project: ${projectId} (${moment(timestamp).fromNow()})`;
 };
 
 const handleNewProject = () => {
@@ -56,28 +71,36 @@ const handleNewProject = () => {
 
   redirectTo(`${newId}/dashboard`);
 };
-const handleOpenProject = (project) => {
+
+const handleOpenProject = (project: any) => {
   redirectTo(`${project.id}/dashboard`);
+};
+
+const handleRemoveProject = (project: any) => {
+  let projects = getProjects();
+  projects = Object.entries(projects).filter(function (item) {
+    return item['id'] !== project.id;
+  });
+  // TODO make it works
 };
 
 const Project = () => {
   const classes = useStyles();
-
   const projects = getProjects();
-
   return (
     <div className={classes.paper}>
       <Typography component="h1" variant="h5" gutterBottom>
         RML.io Dashboard
       </Typography>
-
-      {
-        Object.keys(projects)
-          .map((id) => (
-            <button onClick={() => handleOpenProject(projects[id])}>{id}<br />{projects[id].createdAt}</button>
-          ))
-      }
-
+      <List>
+        {Object.keys(projects).map((project) => (
+          <ProjectItem
+            name={displayProject(projects[project])}
+            onClick={() => handleOpenProject(projects[project])}
+            onRemove={() => handleRemoveProject(projects[project])}
+          />
+        ))}
+      </List>
       <Divider variant="middle" />
       <Button
         variant="contained"
