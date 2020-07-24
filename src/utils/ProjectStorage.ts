@@ -13,3 +13,7 @@ export const saveProject = (id, data) => {
   projects[id] = data;
   localStorage.setItem(KEY_PROJECT, JSON.stringify(projects));
 };
+
+export const saveProjects = (projects) => {
+  localStorage.setItem(KEY_PROJECT, JSON.stringify(projects));
+};

@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams, Redirect } from 'react-router-dom';
 import {
   Button,
@@ -15,8 +15,8 @@ import {
 import MyDialog from '../components/MyDialog';
 import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
-import {findSources} from "../utils/mapperConfig";
-import {getProjects, saveProject} from "../utils/ProjectStorage";
+import { findSources } from '../utils/mapperConfig';
+import { getProjects, saveProject } from '../utils/ProjectStorage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,11 +39,11 @@ const getAllComponentsByCategory = (columns, category) => {
   // get all components of a specific category over multiple columns
   return columns
     .filter((col) => col.category === category)
-    .reduce((arr, col) => ([...arr, ...col.components]), []);
-}
+    .reduce((arr, col) => [...arr, ...col.components], []);
+};
 
 const updateConfig = (config, columns) => {
-  const newConfig = {...config};
+  const newConfig = { ...config };
 
   const sources = getAllComponentsByCategory(columns, ComponentCategory.Source);
   const processors = getAllComponentsByCategory(columns, ComponentCategory.Processor);
@@ -57,7 +57,7 @@ const updateConfig = (config, columns) => {
       return {
         ...processor,
         sources: sourceIds,
-      }
+      };
     }
     return processor;
   });
@@ -105,7 +105,7 @@ const Dashboard = ({ project }) => {
       ...project,
       config,
       columns,
-    })
+    });
   }, [columns, config, project]);
 
   /* const handleFilesUpload = (event: any) => {
@@ -133,7 +133,7 @@ const Dashboard = ({ project }) => {
     setConfig({
       ...config,
       [event.target.name]: event.target.checked,
-    })
+    });
   };
 
   const setDeploySettingsOpen = (open) => {
@@ -157,8 +157,7 @@ const Dashboard = ({ project }) => {
   }; */
 
   const sendData = async () => {
-    let formData = new FormData();
-
+    // let formData = new FormData();
     /* let tmpProcessors = [...processors];
     for (const processor of tmpProcessors) {
       processor.config = btoa(processor.config);

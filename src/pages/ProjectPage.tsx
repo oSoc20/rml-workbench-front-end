@@ -1,5 +1,5 @@
 import moment from 'moment';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Button,
   Divider,
@@ -76,25 +76,26 @@ const handleOpenProject = (project: any) => {
   redirectTo(`${project.id}/dashboard`);
 };
 
-const handleRemoveProject = (project: any) => {
-  let projects = getProjects();
-  projects = Object.entries(projects).filter(function (item) {
-    return item['id'] !== project.id;
-  });
-  // TODO make it works
-};
-
 const Project = () => {
   const classes = useStyles();
-  const projects = getProjects();
+  const [projects, setProjects] = useState(getProjects());
+
+  const handleRemoveProject = (project: any) => {
+    let tmp = Object.entries(projects).filter(([value]) => value !== project.id);
+    let tmpToObject = Object.fromEntries(tmp);
+    setProjects(tmpToObject);
+    saveProjects(tmpToObject);
+  };
+
   return (
     <div className={classes.paper}>
       <Typography component="h1" variant="h5" gutterBottom>
         RML.io Dashboard
       </Typography>
       <List>
-        {Object.keys(projects).map((project) => (
+        {Object.keys(projects).map((project: any, index: number) => (
           <ProjectItem
+            key={index}
             name={displayProject(projects[project])}
             onClick={() => handleOpenProject(projects[project])}
             onRemove={() => handleRemoveProject(projects[project])}
