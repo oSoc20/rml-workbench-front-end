@@ -10,6 +10,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
+import logo from '../assets/rml-io-dashboard.svg';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,11 +54,7 @@ const Navbar = () => {
     <AppBar position="static" className={classes.appBar} elevation={1}>
       <Toolbar>
         <a href="/#" className={classes.brand}>
-          <Avatar
-            alt="Logo"
-            src={`${process.env.PUBLIC_URL}/rml-io-dashboard.svg`}
-            className={classes.large}
-          />
+          <Avatar alt="Logo" src={logo} className={classes.large} />
         </a>
         <Typography variant="h6" className={classes.title}>
           RML.io Dashboard
