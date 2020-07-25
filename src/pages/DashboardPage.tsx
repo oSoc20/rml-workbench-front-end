@@ -3,11 +3,13 @@ import { useParams, Redirect } from 'react-router-dom';
 import {
   Button,
   Checkbox,
+  Container,
   FormControlLabel,
   FormGroup,
   Grid,
   Paper,
   Theme,
+  Typography,
   createStyles,
   makeStyles,
 } from '@material-ui/core';
@@ -26,6 +28,9 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: 'center',
       justifyCenter: 'center',
       marginTop: theme.spacing(4),
+    },
+    heroContent: {
+      padding: theme.spacing(4, 0, 6),
     },
     root: {
       display: 'flex',
@@ -175,6 +180,11 @@ const Dashboard = ({ project }) => {
 
   return (
     <Paper elevation={0} className={classes.root}>
+      <Container maxWidth="sm" component="main" className={classes.heroContent}>
+        <Typography variant="h5" align="center" color="textSecondary" component="h2">
+          Add your source files and mappings configs to deploy generate your RDF file !
+        </Typography>
+      </Container>
       <Grid container>
         {columns.map((column, index: number) => (
           <Column key={index} updateColumn={handleUpdateColumn} column={column} />
