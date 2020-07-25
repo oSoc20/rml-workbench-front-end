@@ -86,7 +86,7 @@ const DashboardPage = () => {
     const newId = `project_${new Date().getTime()}`;
     return (
       <Dashboard
-        key={0}
+        key={newId}
         project={{
           ...PROJECT_DEFAULT,
           createdAt: new Date().getTime(),
