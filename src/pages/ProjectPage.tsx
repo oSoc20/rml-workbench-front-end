@@ -10,22 +10,17 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import { redirectTo } from '../services/history';
-import { getProjects, saveProject, saveProjects } from '../utils/ProjectStorage';
+
 import ProjectItem from '../components/item/ProjectItem';
 import { Columns } from '../constants/columns';
 import { ComponentCategory } from '../constants/componentCategory';
+import { redirectTo } from '../services/history';
+import { getProjects, saveProject, saveProjects } from '../utils/ProjectStorage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
       margin: theme.spacing(1),
-    },
-    paper: {
-      marginTop: theme.spacing(32),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
     },
     list: {
       width: '100%',
@@ -33,6 +28,12 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
       overflow: 'auto',
       maxHeight: 290,
+    },
+    paper: {
+      marginTop: theme.spacing(32),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
   }),
 );
@@ -75,7 +76,6 @@ const handleNewProject = () => {
     createdAt: new Date().getTime(),
     id: newId,
   });
-
   redirectTo(`${newId}/dashboard`);
 };
 
