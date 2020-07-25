@@ -102,11 +102,22 @@ const Dashboard = ({ project }) => {
   };
 
   useEffect(() => {
-    saveProject(project.id, {
-      ...project,
-      config,
-      columns,
-    });
+    const isEmptyDashboard = () => {
+      for (const column of columns) {
+        if (column.components.length !== 0) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    if (!isEmptyDashboard()) {
+      saveProject(project.id, {
+        ...project,
+        config,
+        columns,
+      });
+    }
   }, [columns, config, project]);
 
   /* const handleFilesUpload = (event: any) => {
