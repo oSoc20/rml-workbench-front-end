@@ -11,6 +11,10 @@ import Title from './Title';
 const useStyles = makeStyles(() =>
   createStyles({
     btnAdd: { paddingLeft: 0 },
+    list: {
+      minWidth: 200,
+      maxWidth: 300,
+    },
   }),
 );
 
@@ -85,7 +89,7 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
             />
           </Grid>
           <Grid item>
-            <List>
+            <List className={classes.list}>
               {column.components.map((component: any, index: number) => (
                 <ComponentItem
                   key={component.id}

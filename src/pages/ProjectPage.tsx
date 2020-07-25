@@ -30,10 +30,10 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: 290,
     },
     paper: {
-      marginTop: theme.spacing(32),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      marginTop: theme.spacing(32),
     },
   }),
 );

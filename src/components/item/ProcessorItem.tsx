@@ -16,6 +16,7 @@ import MapIcon from '@material-ui/icons/Map';
 import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 
 import { ComponentProps } from './ComponentItem';
+import { Targets } from '../../constants/targets';
 import { capitalizeFirstLetter } from '../../utils/stringProcessing';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -30,6 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ProcessorItem = ({ component, index, onRemove, onUpdate }: ComponentProps) => {
   const classes = useStyles();
+
+  const displayTarget = (ext: string) => {
+    let tmp = Object.values(Targets).filter((target) => target.extension === `.${ext}`);
+    return `${tmp[0].name} file`;
+  };
+
   return (
     <ListItem
       button={true}
@@ -46,15 +53,13 @@ const ProcessorItem = ({ component, index, onRemove, onUpdate }: ComponentProps)
       <ListItemText
         className={classes.textOrange}
         primary={`${capitalizeFirstLetter(component.category)} ${index + 1}`}
+        secondary={displayTarget(component.target)}
       />
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete" onClick={() => onRemove(component.id)}>
           <ClearIcon />
         </IconButton>
       </ListItemSecondaryAction>
-      {
-        component.target
-      }
       {/*processor.sources.map((source: any) => (
         <LineTo
           from={source}
