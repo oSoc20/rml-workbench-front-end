@@ -16,7 +16,7 @@ import MapIcon from '@material-ui/icons/Map';
 import TrackChangesIcon from '@material-ui/icons/TrackChanges';
 
 import { ComponentProps } from './ComponentItem';
-import { Targets } from '../../constants/targets';
+import { TARGETS_DEFAULT } from '../../constants/targets';
 import { capitalizeFirstLetter } from '../../utils/stringProcessing';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -33,7 +33,7 @@ const ProcessorItem = ({ component, index, onRemove, onUpdate }: ComponentProps)
   const classes = useStyles();
 
   const displayTarget = (ext: string) => {
-    let tmp = Object.values(Targets).filter((target) => target.extension === `.${ext}`);
+    let tmp = Object.values(TARGETS_DEFAULT).filter((target) => target.extension === `.${ext}`);
     return `${tmp[0].name} file`;
   };
 

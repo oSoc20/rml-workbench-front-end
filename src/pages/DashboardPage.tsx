@@ -18,6 +18,7 @@ import SendIcon from '@material-ui/icons/Send';
 import MyDialog from '../components/MyDialog';
 import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
+import { PROJECT_DEFAULT } from '../constants/project';
 import { findSources } from '../utils/mapperConfig';
 import { getProjects, saveProject } from '../utils/ProjectStorage';
 
@@ -73,11 +74,29 @@ const updateConfig = (config, columns) => {
 
 const DashboardPage = () => {
   const { id } = useParams();
-  const project = useMemo(() => getProjects()[id], [id]);
-  if (!project) {
-    return <Redirect to="/" />;
+  var isUntitled = false;
+  if (id.includes('untitled')) {
+    isUntitled = true;
   }
-  return <Dashboard key={id} project={project} />;
+
+  const project = useMemo(() => getProjects()[id], [id]);
+  if (!isUntitled && !project) {
+    return <Redirect to="/" />;
+  } else if (isUntitled) {
+    const newId = `project_${new Date().getTime()}`;
+    return (
+      <Dashboard
+        key={0}
+        project={{
+          ...PROJECT_DEFAULT,
+          createdAt: new Date().getTime(),
+          id: newId,
+        }}
+      />
+    );
+  } else {
+    return <Dashboard key={id} project={project} />;
+  }
 };
 
 const Dashboard = ({ project }) => {

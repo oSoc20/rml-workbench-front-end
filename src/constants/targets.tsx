@@ -1,4 +1,4 @@
-export const Targets = {
+export const TARGETS_DEFAULT = {
   hdt: {
     extension: '.hdt',
     name: 'HDT',

@@ -13,10 +13,8 @@ import {
 import AddIcon from '@material-ui/icons/Add';
 
 import ProjectItem from '../components/item/ProjectItem';
-import { Columns } from '../constants/columns';
-import { ComponentCategory } from '../constants/componentCategory';
 import { redirectTo } from '../services/history';
-import { getProjects, saveProject, saveProjects } from '../utils/ProjectStorage';
+import { getProjects, saveProjects } from '../utils/ProjectStorage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -39,31 +37,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const CONFIG_DEFAULT = {
-  download: true,
-  execute: false,
-};
-
-const COLUMNS_DEFAULT = [
-  {
-    id: new Date().getTime(),
-    name: Columns[ComponentCategory.Source].title,
-    category: ComponentCategory.Source,
-    components: [],
-  },
-  {
-    id: new Date().getTime() + 1, // or unique hash in future
-    name: Columns[ComponentCategory.Processor].title,
-    category: ComponentCategory.Processor,
-    components: [],
-  },
-];
-
-const PROJECT_DEFAULT = {
-  columns: [...COLUMNS_DEFAULT.map((col) => ({ ...col }))],
-  config: { ...CONFIG_DEFAULT },
-};
-
 const displayProject = (project: any) => {
   const projectId = project.id.split('_')[1];
   const timestamp = moment(Number(project.createdAt)).valueOf();
@@ -71,13 +44,13 @@ const displayProject = (project: any) => {
 };
 
 const handleNewProject = () => {
-  const newId = `project_${new Date().getTime()}`;
-  saveProject(newId, {
-    ...PROJECT_DEFAULT,
-    createdAt: new Date().getTime(),
-    id: newId,
-  });
-  redirectTo(`${newId}/dashboard`);
+  // const newId = `project_${new Date().getTime()}`;
+  // saveProject(newId, {
+  //   ...PROJECT_DEFAULT,
+  //   createdAt: new Date().getTime(),
+  //   id: newId,
+  // });
+  redirectTo('untitled/dashboard');
 };
 
 const handleOpenProject = (project: any) => {

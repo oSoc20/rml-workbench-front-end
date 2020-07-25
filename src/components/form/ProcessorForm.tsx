@@ -16,7 +16,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 import { ComponentCategory } from '../../constants/componentCategory';
-import { Targets } from '../../constants/targets';
+import { TARGETS_DEFAULT } from '../../constants/targets';
 import { FormProps } from './ComponentForm';
 import MyDialog from '../MyDialog';
 
@@ -76,14 +76,14 @@ const ProcessorForm = ({ component, onClose, onUpdate }: FormProps) => {
           <FormControl className={classes.formControl}>
             <InputLabel id="target">Target</InputLabel>
             <Select labelId="target" value={data.target} name="target" onChange={handleChange}>
-              {Object.keys(Targets).map((target) => (
+              {Object.keys(TARGETS_DEFAULT).map((target) => (
                 <MenuItem key={target} value={target}>
                   <div className={classes.item}>
                     <Avatar className={classes.avatar}>
                       <DescriptionIcon />
                     </Avatar>
                     <Typography>
-                      {Targets[target].name} ({Targets[target].extension})
+                      {TARGETS_DEFAULT[target].name} ({TARGETS_DEFAULT[target].extension})
                     </Typography>
                   </div>
                 </MenuItem>

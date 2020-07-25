@@ -10,6 +10,7 @@ export default class RouteHandler extends React.Component {
       <Switch>
         <Route path="/" exact component={ProjectPage} />
         <Route path="/:id/dashboard" exact component={DashboardPage} />
+        <Route path="/untitled/dashboard" exact component={DashboardPage} />
         <Redirect to="/" />
       </Switch>
     );
