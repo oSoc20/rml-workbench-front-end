@@ -101,9 +101,8 @@ const Project = () => {
       </Typography>
       <List className={classes.list}>
         {Object.keys(projects).map((project: any, index: number) => (
-          <div>
+          <div key={index}>
             <ProjectItem
-              key={index}
               name={displayProject(projects[project])}
               onClick={() => handleOpenProject(projects[project])}
               onRemove={() => handleRemoveProject(projects[project])}
