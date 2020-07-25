@@ -69,7 +69,7 @@ const Navbar = () => {
           style={{ textTransform: 'uppercase' }}
         >
           <Link to="/" className={classes.itemLink}>
-            Home
+            Projects
           </Link>
         </nav>
       </Toolbar>
