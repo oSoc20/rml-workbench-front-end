@@ -29,6 +29,13 @@ const DEFAULT = {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    avatar: {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+      marginRight: theme.spacing(2),
+      backgroundColor: deepOrange[500],
+      color: theme.palette.getContrastText(deepOrange[500]),
+    },
     formControl: {
       minWidth: '100%',
       marginBottom: theme.spacing(2),
@@ -37,13 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       marginLeft: theme.spacing(0.5),
-    },
-    avatar: {
-      width: theme.spacing(4),
-      height: theme.spacing(4),
-      marginRight: theme.spacing(2),
-      backgroundColor: deepOrange[500],
-      color: theme.palette.getContrastText(deepOrange[500]),
     },
   }),
 );
