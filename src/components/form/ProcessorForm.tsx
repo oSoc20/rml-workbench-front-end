@@ -1,18 +1,24 @@
 import React, { useState } from 'react';
-import { Avatar, createStyles, makeStyles, TextField, Theme } from '@material-ui/core';
+import {
+  Avatar,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Theme,
+  Typography,
+  createStyles,
+  makeStyles,
+} from '@material-ui/core';
+import { deepOrange } from '@material-ui/core/colors';
+import DescriptionIcon from '@material-ui/icons/Description';
+import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 import { ComponentCategory } from '../../constants/componentCategory';
+import { Targets } from '../../constants/targets';
 import { FormProps } from './ComponentForm';
 import MyDialog from '../MyDialog';
-import DescriptionIcon from '@material-ui/icons/Description';
-import { deepOrange } from '@material-ui/core/colors';
-import { Targets } from '../../constants/targets';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import Typography from '@material-ui/core/Typography';
-import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 const DEFAULT = {
   type: 'mapper',
