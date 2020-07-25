@@ -11,6 +11,7 @@ import {
   createStyles,
   makeStyles,
 } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
 import MyDialog from '../components/MyDialog';
 import Column from '../components/Column';
@@ -61,21 +62,16 @@ const updateConfig = (config, columns) => {
     }
     return processor;
   });
-
   newConfig.sources = sources;
-
   return newConfig;
 };
 
 const DashboardPage = () => {
   const { id } = useParams();
-
   const project = useMemo(() => getProjects()[id], [id]);
-
   if (!project) {
     return <Redirect to="/" />;
   }
-
   return <Dashboard key={id} project={project} />;
 };
 
@@ -191,6 +187,7 @@ const Dashboard = ({ project }) => {
                 color="primary"
                 size="large"
                 onClick={() => setDeploySettingsOpen(true)}
+                startIcon={<SendIcon />}
               >
                 Deploy
               </Button>
