@@ -195,7 +195,6 @@ const Dashboard = ({ project }) => {
           </Grid>
         </Grid>
       </Grid>
-
       <MyDialog
         children={
           <FormGroup>
