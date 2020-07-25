@@ -1,5 +1,9 @@
 const KEY_PROJECT = 'KEY_PROJECTS';
 
+export const isProjectExist = (id) => {
+  return id in getProjects();
+};
+
 export const getProjects = () => {
   const projects = localStorage.getItem(KEY_PROJECT);
   if (projects && projects !== '') {
