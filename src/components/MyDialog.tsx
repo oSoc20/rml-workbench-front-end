@@ -42,8 +42,7 @@ const Text = (props: any) => {
   return <div>{children}</div>;
 };
 
-const MyDialog = (props: MyDialogProps) => {
-  const { children, onClose, onSave, open, save, title } = props;
+const MyDialog = ({ children, onClose, onSave, open, save, title }: MyDialogProps) => {
   return (
     <Dialog
       fullWidth={true}
