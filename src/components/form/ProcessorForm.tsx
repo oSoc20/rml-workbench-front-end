@@ -33,9 +33,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginLeft: theme.spacing(0.5),
     },
     avatar: {
+      width: theme.spacing(4),
+      height: theme.spacing(4),
+      marginRight: theme.spacing(2),
       backgroundColor: deepOrange[500],
       color: theme.palette.getContrastText(deepOrange[500]),
-      marginRight: theme.spacing(2),
     },
   }),
 );
