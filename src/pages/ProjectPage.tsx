@@ -29,10 +29,15 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: 290,
     },
     paper: {
+      position: 'fixed',
+      top: 0,
+      left: 0,
       display: 'flex',
       flexDirection: 'column',
+      justifyContent: 'center',
       alignItems: 'center',
-      marginTop: theme.spacing(32),
+      height: '100%',
+      width: '100%',
     },
   }),
 );
