@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import {
   Button,
   Divider,
+  Fade,
   List,
   Theme,
   Typography,
@@ -101,14 +102,16 @@ const Project = () => {
       </Typography>
       <List className={classes.list}>
         {Object.keys(projects).map((project: any, index: number) => (
-          <div key={index}>
-            <ProjectItem
-              name={displayProject(projects[project])}
-              onClick={() => handleOpenProject(projects[project])}
-              onRemove={() => handleRemoveProject(projects[project])}
-            />
-            <Divider variant="inset" component="li" light />
-          </div>
+          <Fade in={true} key={index} timeout={(index + 1) * 400}>
+            <div>
+              <ProjectItem
+                name={displayProject(projects[project])}
+                onClick={() => handleOpenProject(projects[project])}
+                onRemove={() => handleRemoveProject(projects[project])}
+              />
+              <Divider variant="inset" component="li" light />
+            </div>
+          </Fade>
         ))}
       </List>
       <Divider />
