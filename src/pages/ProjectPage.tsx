@@ -14,7 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import ProjectItem from '../components/item/ProjectItem';
 import { redirectTo } from '../services/history';
-import { getProjects, saveProjects } from '../utils/ProjectStorage';
+import { getProjects, removeProject } from '../utils/ProjectStorage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -67,10 +67,8 @@ const Project = () => {
   const [projects, setProjects] = useState(getProjects());
 
   const handleRemoveProject = (project: any) => {
-    let tmp = Object.entries(projects).filter(([value]) => value !== project.id);
-    let tmpToObject = Object.fromEntries(tmp);
-    setProjects(tmpToObject);
-    saveProjects(tmpToObject);
+    removeProject(project);
+    setProjects(getProjects());
   };
 
   return (

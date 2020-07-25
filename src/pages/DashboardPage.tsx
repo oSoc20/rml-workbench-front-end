@@ -20,7 +20,7 @@ import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
 import { PROJECT_DEFAULT } from '../constants/project';
 import { findSources } from '../utils/mapperConfig';
-import { getProjects, isProjectExist, saveProject, saveProjects } from '../utils/ProjectStorage';
+import { getProjects, isProjectExist, removeProject, saveProject } from '../utils/ProjectStorage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -130,12 +130,6 @@ const Dashboard = ({ project }) => {
       return true;
     };
 
-    const handleRemoveProject = (project: any) => {
-      let tmp = Object.entries(getProjects()).filter(([value]) => value !== project.id);
-      let tmpToObject = Object.fromEntries(tmp);
-      saveProjects(tmpToObject);
-    };
-
     if (!isEmptyDashboard()) {
       saveProject(project.id, {
         ...project,
@@ -143,7 +137,7 @@ const Dashboard = ({ project }) => {
         columns,
       });
     } else if (isProjectExist(project.id)) {
-      handleRemoveProject(project);
+      removeProject(project);
     }
   }, [columns, config, project]);
 
