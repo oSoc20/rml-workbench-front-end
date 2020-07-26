@@ -20,8 +20,8 @@ import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
 import { PROJECT_DEFAULT } from '../constants/project';
 import { findSources } from '../utils/mapperConfig';
+import { getProjects, isProjectExist, removeProject, saveProject } from '../utils/storage';
 import { genId } from '../utils/stringProcessing';
-import { getProjects, isProjectExist, removeProject, saveProject } from '../utils/ProjectStorage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const getAllComponentsByCategory = (columns, category) => {
-  // get all components of a specific category over multiple columns
   return columns
     .filter((col) => col.category === category)
     .reduce((arr, col) => [...arr, ...col.components], []);
@@ -56,11 +55,11 @@ const updateConfig = (config, columns) => {
   const sources = getAllComponentsByCategory(columns, ComponentCategory.Source);
   const processors = getAllComponentsByCategory(columns, ComponentCategory.Processor);
 
-  newConfig.processors = processors.map((processor) => {
+  newConfig.processors = processors.map((processor: any) => {
     if (processor.type === 'mapper') {
       const sourceIds = findSources(processor.config)
         .map((fileName) => sources.find((s) => s.file?.name === fileName)?.id)
-        .filter((id) => !id); // only keep the ones that exist as a source
+        .filter((id) => !id);
 
       return {
         ...processor,

@@ -17,8 +17,7 @@ interface MyDialogProps {
   title: string | JSX.Element;
 }
 
-const ShouldDisplayActions = (props: any) => {
-  const { onClose, onSave, save } = props;
+const ShouldDisplayActions = ({ onClose, onSave, save }) => {
   if (onSave) {
     return (
       <DialogActions>
@@ -31,11 +30,10 @@ const ShouldDisplayActions = (props: any) => {
       </DialogActions>
     );
   }
-  return <div></div>;
+  return <></>;
 };
 
-const Text = (props: any) => {
-  const children = props.children;
+const Text = ({ children }) => {
   if (typeof children === 'string') {
     return <DialogContentText>{children}</DialogContentText>;
   }

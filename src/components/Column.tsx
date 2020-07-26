@@ -30,39 +30,10 @@ interface ColumnProps {
 
 const Column = ({ column, updateColumn }: ColumnProps) => {
   const classes = useStyles();
-
   const [detail, setDetail] = useState();
 
-  const handleUpdateColumn = (data: any) => {
-    updateColumn(column.id, data);
-  };
-
-  const handleUpdate = (component: any) => {
-    // close dialog if necessary
-    if (detail) {
-      setDetail(null);
-    }
-    // save data
-    const data = { ...column };
-    if (component.id) {
-      // existing, replace
-      data.components = data.components.map((c: any) => {
-        if (c.id === component.id) {
-          return component;
-        }
-        return c;
-      });
-    } else {
-      // add
-      data.components = [
-        ...data.components,
-        {
-          ...component,
-          id: genId(),
-        },
-      ];
-    }
-    handleUpdateColumn(data);
+  const handleDetail = (component: any) => {
+    setDetail(component);
   };
 
   const handleRemove = (id: number) => {
@@ -71,8 +42,33 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
     handleUpdateColumn(data);
   };
 
-  const handleDetail = (component: any) => {
-    setDetail(component);
+  const handleUpdate = (component: any) => {
+    if (detail) {
+      setDetail(null);
+    }
+
+    const data = { ...column };
+    if (component.id) {
+      data.components = data.components.map((c: any) => {
+        if (c.id === component.id) {
+          return component;
+        }
+        return c;
+      });
+    } else {
+      data.components = [
+        ...data.components,
+        {
+          id: genId(),
+          ...component,
+        },
+      ];
+    }
+    handleUpdateColumn(data);
+  };
+
+  const handleUpdateColumn = (data: any) => {
+    updateColumn(column.id, data);
   };
 
   return (
@@ -105,11 +101,7 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
                 color="primary"
                 component="span"
                 className={classes.btnAdd}
-                onClick={() =>
-                  handleDetail({
-                    category: column.category,
-                  })
-                }
+                onClick={() => handleDetail({ category: column.category })}
               >
                 <AddIcon /> Add a {column.category}
               </Button>

@@ -14,7 +14,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import ProjectItem from '../components/items/ProjectItem';
 import { redirectTo } from '../services/history';
-import { getProjects, removeProject } from '../utils/ProjectStorage';
+import { getProjects, removeProject } from '../utils/storage';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

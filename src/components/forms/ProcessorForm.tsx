@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ProcessorForm = ({ component, onClose, onUpdate }: FormProps) => {
   const classes = useStyles();
-
   const [data, setData] = useState({
     ...DEFAULT,
     ...component,
