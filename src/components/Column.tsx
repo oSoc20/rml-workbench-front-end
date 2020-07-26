@@ -5,8 +5,8 @@ import AddIcon from '@material-ui/icons/Add';
 import { Columns } from '../constants/columns';
 import { ComponentCategory } from '../constants/componentCategory';
 import { genId } from '../utils/stringProcessing';
-import ComponentForm from './form/ComponentForm';
-import ComponentItem from './item/ComponentItem';
+import ComponentForm from './forms/ComponentForm';
+import ComponentItem from './items/ComponentItem';
 import Title from './Title';
 
 const useStyles = makeStyles(() =>
@@ -20,10 +20,7 @@ const useStyles = makeStyles(() =>
 );
 
 const isAddAllowed = (category: any) => {
-  if (category === ComponentCategory.Processor || category === ComponentCategory.Source) {
-    return true;
-  }
-  return false;
+  return category === ComponentCategory.Processor || category === ComponentCategory.Source;
 };
 
 interface ColumnProps {

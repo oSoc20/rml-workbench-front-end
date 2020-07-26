@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 
-import ProjectItem from '../components/item/ProjectItem';
+import ProjectItem from '../components/items/ProjectItem';
 import { redirectTo } from '../services/history';
 import { getProjects, removeProject } from '../utils/ProjectStorage';
 
