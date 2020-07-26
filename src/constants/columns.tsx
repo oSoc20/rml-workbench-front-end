@@ -1,3 +1,4 @@
+import { genId } from '../utils/stringProcessing';
 import { ComponentCategory } from './componentCategory';
 
 export const Columns = {
@@ -13,13 +14,13 @@ export const Columns = {
 
 export const COLUMNS_DEFAULT = [
   {
-    id: new Date().getTime(),
+    id: genId(),
     name: Columns[ComponentCategory.Source].title,
     category: ComponentCategory.Source,
     components: [],
   },
   {
-    id: new Date().getTime() + 1, // or unique hash in future
+    id: genId(),
     name: Columns[ComponentCategory.Processor].title,
     category: ComponentCategory.Processor,
     components: [],

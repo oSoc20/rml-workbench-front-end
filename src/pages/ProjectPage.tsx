@@ -43,18 +43,11 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const displayProject = (project: any) => {
-  const projectId = project.id.split('_')[1];
   const timestamp = moment(Number(project.createdAt)).valueOf();
-  return `Project: ${projectId} (${moment(timestamp).fromNow()})`;
+  return `Project: ${project.id} (${moment(timestamp).fromNow()})`;
 };
 
 const handleNewProject = () => {
-  // const newId = `project_${new Date().getTime()}`;
-  // saveProject(newId, {
-  //   ...PROJECT_DEFAULT,
-  //   createdAt: new Date().getTime(),
-  //   id: newId,
-  // });
   redirectTo('untitled/dashboard');
 };
 

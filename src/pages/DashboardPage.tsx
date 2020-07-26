@@ -20,6 +20,7 @@ import Column from '../components/Column';
 import { ComponentCategory } from '../constants/componentCategory';
 import { PROJECT_DEFAULT } from '../constants/project';
 import { findSources } from '../utils/mapperConfig';
+import { genId } from '../utils/stringProcessing';
 import { getProjects, isProjectExist, removeProject, saveProject } from '../utils/ProjectStorage';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -83,7 +84,7 @@ const DashboardPage = () => {
   if (!isUntitled && !project) {
     return <Redirect to="/" />;
   } else if (isUntitled) {
-    const newId = `project_${new Date().getTime()}`;
+    const newId = genId();
     return (
       <Dashboard
         key={newId}

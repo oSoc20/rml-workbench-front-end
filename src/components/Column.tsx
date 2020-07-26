@@ -4,6 +4,7 @@ import AddIcon from '@material-ui/icons/Add';
 
 import { Columns } from '../constants/columns';
 import { ComponentCategory } from '../constants/componentCategory';
+import { genId } from '../utils/stringProcessing';
 import ComponentForm from './form/ComponentForm';
 import ComponentItem from './item/ComponentItem';
 import Title from './Title';
@@ -60,7 +61,7 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
         ...data.components,
         {
           ...component,
-          id: new Date().getTime(),
+          id: genId(),
         },
       ];
     }
