@@ -69,6 +69,9 @@ const Project = () => {
       <Typography component="h1" variant="h5" gutterBottom>
         RML.io Dashboard
       </Typography>
+      <Typography component="h2" variant="subtitle1" gutterBottom>
+        You currently have <strong>{Object.keys(projects).length}</strong> projects saved.
+      </Typography>
       <List className={classes.list}>
         {Object.keys(projects).map((project: any, index: number) => (
           <Fade in={true} key={index} timeout={(index + 1) * 400}>
