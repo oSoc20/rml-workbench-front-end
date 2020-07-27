@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ComponentCategory } from '../../constants/componentCategory';
 import ProcessorForm from './ProcessorForm';
+import SourceForm from './SourceForm';
 
 export interface FormProps {
   onClose: () => void;
@@ -13,7 +14,7 @@ const ComponentForm = (props: FormProps) => {
   if (category === ComponentCategory.Processor) {
     return <ProcessorForm {...props} />;
   } else if (category === ComponentCategory.Source) {
-    return null;
+    return <SourceForm {...props} />;
   }
   return null;
 };

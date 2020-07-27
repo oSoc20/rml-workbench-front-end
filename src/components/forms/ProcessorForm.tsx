@@ -16,7 +16,7 @@ import DescriptionIcon from '@material-ui/icons/Description';
 import AccountTreeIcon from '@material-ui/icons/AccountTree';
 
 import { ComponentCategory } from '../../constants/componentCategory';
-import { TARGETS_DEFAULT } from '../../constants/targets';
+import { TARGETS_DEFAULT, MAPPER_CONFIG } from '../../constants/targets';
 import { FormProps } from './ComponentForm';
 import MyDialog from '../MyDialog';
 
@@ -56,6 +56,7 @@ const ProcessorForm = ({ component, onClose, onUpdate }: FormProps) => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event);
     setData({
       ...data,
       [event.target.name]: event.target.value,
@@ -73,6 +74,18 @@ const ProcessorForm = ({ component, onClose, onUpdate }: FormProps) => {
       children={
         <>
           <FormControl className={classes.formControl}>
+            <InputLabel id="type">Type</InputLabel>
+            <Select labelId="type" value={data.type} name="type" onChange={handleChange}>
+              {Object.keys(MAPPER_CONFIG).map((type) => (
+                <MenuItem key={type} value={type}>
+                  <div className={classes.item}>
+                    <Typography>{MAPPER_CONFIG[type].type}</Typography>
+                  </div>
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl className={classes.formControl}>
             <InputLabel id="target">Target</InputLabel>
             <Select labelId="target" value={data.target} name="target" onChange={handleChange}>
               {Object.keys(TARGETS_DEFAULT).map((target) => (
@@ -89,19 +102,23 @@ const ProcessorForm = ({ component, onClose, onUpdate }: FormProps) => {
               ))}
             </Select>
           </FormControl>
-          <TextField
-            autoFocus
-            variant="outlined"
-            id="name"
-            label="Config"
-            multiline
-            size="medium"
-            name="config"
-            rows={30}
-            value={data.config}
-            onChange={handleChange}
-            fullWidth
-          />
+          {data.type === 'mapper' ? (
+            <TextField
+              autoFocus
+              variant="outlined"
+              id="name"
+              label="Config"
+              multiline
+              size="medium"
+              name="config"
+              rows={30}
+              value={data.config}
+              onChange={handleChange}
+              fullWidth
+            />
+          ) : (
+            <></>
+          )}
         </>
       }
       onClose={onClose}
