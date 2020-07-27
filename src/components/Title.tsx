@@ -48,7 +48,7 @@ const Title = ({ name, onUpdate, tooltip }: TitleProps) => {
 
   const handleSaveTitle = () => {
     setEditing(false);
-    if (title.length !== 0 && title.length < 20) {
+    if (title.length !== 0 && title.length < 31) {
       onUpdate(title.trim());
     } else {
       setTitle(name);
@@ -64,7 +64,7 @@ const Title = ({ name, onUpdate, tooltip }: TitleProps) => {
           value={title}
           onChange={handleChange}
           className={classes.textField}
-          inputProps={{ maxLength: 20 }}
+          inputProps={{ maxLength: 30 }}
         />
         <Button onClick={handleCloseEditing}>
           <ClearIcon />
