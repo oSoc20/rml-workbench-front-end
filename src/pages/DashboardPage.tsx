@@ -234,7 +234,7 @@ const Dashboard = ({ project }) => {
         <ProjectTitle title={projectName} onUpdate={handleUpdateProject} />
       </Container>
       <Grid container>
-        {columns.map((column, index: number) => (
+        {columns.map((column: any, index: number) => (
           <Column key={index} column={column} onUpdate={handleUpdateColumn} />
         ))}
         <Grid item xs={12}>
