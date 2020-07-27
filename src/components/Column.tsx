@@ -7,7 +7,7 @@ import { ComponentCategory } from '../constants/componentCategory';
 import { genId } from '../utils/stringProcessing';
 import ComponentForm from './forms/ComponentForm';
 import ComponentItem from './items/ComponentItem';
-import Title from './Title';
+import ColumnTitle from './ColumnTitle';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -25,10 +25,10 @@ const isAddAllowed = (category: any) => {
 
 interface ColumnProps {
   column: any;
-  updateColumn: (id: number, data: any) => void;
+  onUpdate: (id: number, data: any) => void;
 }
 
-const Column = ({ column, updateColumn }: ColumnProps) => {
+const Column = ({ column, onUpdate }: ColumnProps) => {
   const classes = useStyles();
   const [detail, setDetail] = useState();
 
@@ -68,7 +68,7 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
   };
 
   const handleUpdateColumn = (data: any) => {
-    updateColumn(column.id, data);
+    onUpdate(column.id, data);
   };
 
   return (
@@ -76,7 +76,7 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
       <Grid item container xs={6}>
         <Grid item container direction="column" alignItems="center">
           <Grid item>
-            <Title
+            <ColumnTitle
               column={column}
               onUpdate={handleUpdateColumn}
               tooltip={Columns[column.category].tooltip}

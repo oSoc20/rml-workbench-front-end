@@ -15,8 +15,9 @@ import {
 } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
-import MyDialog from '../components/MyDialog';
 import Column from '../components/Column';
+import MyDialog from '../components/MyDialog';
+import ProjectTitle from '../components/ProjectTitle';
 import { ComponentCategory } from '../constants/componentCategory';
 import { PROJECT_DEFAULT } from '../constants/project';
 import { findSources } from '../utils/mapperConfig';
@@ -39,6 +40,13 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: 'column',
       height: '100vh',
       paddingTop: theme.spacing(8),
+    },
+    projectName: {
+      display: 'flex',
+      justifyContent: 'center',
+    },
+    textField: {
+      marginLeft: theme.spacing(2),
     },
   }),
 );
@@ -91,6 +99,7 @@ const DashboardPage = () => {
           ...PROJECT_DEFAULT,
           createdAt: new Date().getTime(),
           id: newId,
+          name: newId,
         }}
       />
     );
@@ -105,7 +114,12 @@ const Dashboard = ({ project }) => {
   const [isDeploySettingsOpen, setIsDeploySettings] = useState(false);
 
   const [columns, setColumns] = useState(project.columns);
+  const [projectName, setProjectName] = useState(project.name);
   const [config, setConfig] = useState(project.config);
+
+  const handleUpdateProject = (title: string) => {
+    setProjectName(title);
+  };
 
   const handleUpdateColumn = (id, data) => {
     const newColumns = columns.map((col) => {
@@ -115,7 +129,6 @@ const Dashboard = ({ project }) => {
       return col;
     });
     const newConfig = updateConfig(config, newColumns);
-
     setConfig(newConfig);
     setColumns(newColumns);
   };
@@ -133,13 +146,15 @@ const Dashboard = ({ project }) => {
     if (!isEmptyDashboard()) {
       saveProject(project.id, {
         ...project,
+        name: projectName,
         config,
         columns,
       });
+      console.log(getProjects());
     } else if (isProjectExist(project.id)) {
       removeProject(project);
     }
-  }, [columns, config, project]);
+  }, [columns, config, projectName, project]);
 
   /* const handleFilesUpload = (event: any) => {
     if (event.target.files.length > 0 && sources.length === 0) {
@@ -213,13 +228,14 @@ const Dashboard = ({ project }) => {
   return (
     <Paper elevation={0} className={classes.root}>
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
-        <Typography variant="h5" align="center" color="textSecondary" component="h2">
+        <Typography variant="h5" align="center" color="textSecondary" component="h2" gutterBottom>
           Add your source files and mappings configs to deploy generate your RML file !
         </Typography>
+        <ProjectTitle title={projectName} onUpdate={handleUpdateProject} />
       </Container>
       <Grid container>
         {columns.map((column, index: number) => (
-          <Column key={index} updateColumn={handleUpdateColumn} column={column} />
+          <Column key={index} column={column} onUpdate={handleUpdateColumn} />
         ))}
         <Grid item xs={12}>
           <Grid container justify="center" alignItems="center">

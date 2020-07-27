@@ -23,15 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface TitleProps {
-  column: any;
+  name: any;
   onUpdate: any;
-  tooltip: string;
+  tooltip?: string;
 }
 
-const Title = ({ column, onUpdate, tooltip }: TitleProps) => {
+const Title = ({ name, onUpdate, tooltip }: TitleProps) => {
   const classes = useStyles();
   const [isEditing, setEditing] = useState(false);
-  const [title, setTitle] = useState(column.name);
+  const [title, setTitle] = useState(name);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(event.target.value);
@@ -39,7 +39,7 @@ const Title = ({ column, onUpdate, tooltip }: TitleProps) => {
 
   const handleCloseEditing = () => {
     setEditing(false);
-    setTitle(column.name);
+    setTitle(name);
   };
 
   const handleEditTitle = () => {
@@ -49,11 +49,9 @@ const Title = ({ column, onUpdate, tooltip }: TitleProps) => {
   const handleSaveTitle = () => {
     setEditing(false);
     if (title.length !== 0 && title.length < 20) {
-      const data = { ...column };
-      data.name = title;
-      onUpdate(data);
+      onUpdate(title.trim());
     } else {
-      setTitle(column.name);
+      setTitle(name);
     }
   };
 
@@ -62,7 +60,7 @@ const Title = ({ column, onUpdate, tooltip }: TitleProps) => {
       <div className={classes.root}>
         <TextField
           name="name"
-          placeholder={column.name}
+          placeholder={name}
           value={title}
           onChange={handleChange}
           className={classes.textField}
@@ -80,10 +78,12 @@ const Title = ({ column, onUpdate, tooltip }: TitleProps) => {
     return (
       <div className={classes.root}>
         <Button className={classes.button} onClick={() => handleEditTitle()}>
-          {column.name}
-          <Tooltip title={tooltip}>
-            <sup className={classes.areaExplaination}>?</sup>
-          </Tooltip>
+          {name}
+          {tooltip && (
+            <Tooltip title={tooltip}>
+              <sup className={classes.areaExplaination}>?</sup>
+            </Tooltip>
+          )}
         </Button>
       </div>
     );

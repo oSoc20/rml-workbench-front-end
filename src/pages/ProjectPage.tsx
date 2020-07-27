@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const displayProject = (project: any) => {
-  return `Project: ${project.id} (${formatDistanceToNow(Number(project.createdAt))} ago)`;
+  return `Project: ${project.name} (${formatDistanceToNow(Number(project.createdAt))} ago)`;
 };
 
 const handleNewProject = () => {
