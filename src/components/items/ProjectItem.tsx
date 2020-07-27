@@ -18,6 +18,9 @@ const useStyles = makeStyles(() =>
     deleteIcon: {
       color: red[300],
     },
+    listItem: {
+      textAlign: 'right',
+    },
   }),
 );
 
@@ -37,7 +40,7 @@ const ProjectItem = (props: ProjectItemProps) => {
           <FolderIcon />
         </Avatar>
       </ListItemAvatar>
-      <ListItemText primary={name} />
+      <ListItemText className={classes.listItem} primary={name} />
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete" onClick={onRemove}>
           <DeleteIcon className={classes.deleteIcon} />
