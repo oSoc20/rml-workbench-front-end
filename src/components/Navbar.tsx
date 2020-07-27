@@ -18,12 +18,12 @@ const useStyles = makeStyles((theme: Theme) =>
       backgroundColor: grey[100],
     },
     brand: {
+      display: 'grid',
+      placeItems: 'center',
       marginRight: theme.spacing(8),
       [theme.breakpoints.down('xs')]: {
         marginRight: theme.spacing(2),
-        margin: 0,
       },
-      height: '100%',
     },
     itemLink: {
       display: 'flex',
