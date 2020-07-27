@@ -1,4 +1,3 @@
-import { formatDistanceToNow } from 'date-fns';
 import React, { useState } from 'react';
 import {
   Button,
@@ -23,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     list: {
       width: '100%',
-      maxWidth: 500,
+      maxWidth: 400,
       position: 'relative',
       overflow: 'auto',
       maxHeight: 290,
@@ -41,10 +40,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
-
-const displayProject = (project: any) => {
-  return `${project.name} (${formatDistanceToNow(Number(project.createdAt))} ago)`;
-};
 
 const handleNewProject = () => {
   redirectTo('untitled/dashboard');
@@ -76,7 +71,7 @@ const Project = () => {
           <Fade in={true} key={index} timeout={(index + 1) * 400}>
             <div>
               <ProjectItem
-                name={displayProject(projects[project])}
+                project={projects[project]}
                 onClick={() => handleOpenProject(projects[project])}
                 onRemove={() => handleRemoveProject(projects[project])}
               />
