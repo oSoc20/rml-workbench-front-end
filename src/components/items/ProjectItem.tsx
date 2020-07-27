@@ -22,9 +22,9 @@ const useStyles = makeStyles(() =>
 );
 
 interface ProjectItemProps {
-  onClick: any;
-  onRemove: any;
   name: string;
+  onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
+  onRemove: (event: React.MouseEvent<HTMLButtonElement>) => void;
 }
 
 const ProjectItem = (props: ProjectItemProps) => {
