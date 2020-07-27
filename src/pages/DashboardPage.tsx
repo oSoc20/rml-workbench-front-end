@@ -22,6 +22,7 @@ import { PROJECT_DEFAULT } from '../constants/project';
 import { findSources } from '../utils/mapperConfig';
 import { getProjects, isProjectExist, removeProject, saveProject } from '../utils/storage';
 import { genId } from '../utils/stringProcessing';
+import Line from '../components/Lines';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,12 +55,12 @@ const updateConfig = (config, columns) => {
 
   const sources = getAllComponentsByCategory(columns, ComponentCategory.Source);
   const processors = getAllComponentsByCategory(columns, ComponentCategory.Processor);
-
   newConfig.processors = processors.map((processor: any) => {
     if (processor.type === 'mapper') {
-      const sourceIds = findSources(processor.config)
-        .map((fileName) => sources.find((s) => s.file?.name === fileName)?.id)
-        .filter((id) => !id);
+      const sourceIds = findSources(processor.config).map(
+        (fileName) => sources.find((s) => s.file[0]?.name === fileName)?.id,
+      );
+      /*.filter((id) => !id);*/
 
       return {
         ...processor,
@@ -270,6 +271,15 @@ const Dashboard = ({ project }) => {
         save={'Deploy'}
         title={'Deployment settings'}
       />
+      {config.processors !== undefined ? (
+        config.processors.map((processor) => {
+          return processor.sources.map((source) => {
+            return <Line sourceID={source} processorID={processor.id} />;
+          });
+        })
+      ) : (
+        <></>
+      )}
     </Paper>
   );
 };

@@ -57,10 +57,10 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
     });
   };
 
-  const handleChangeFiles = (files) => {
+  const handleChangeFiles = (file) => {
     setData({
       ...data,
-      files: files,
+      file: file,
     });
   };
 
@@ -83,7 +83,7 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
           {data.type === 'file' ? (
             <DropzoneArea
               showFileNames
-              filesLimit={4}
+              filesLimit={1}
               onChange={handleChangeFiles}
               acceptedFiles={INPUT_CONFIG[data.type].acceptedFileExtensions}
             />

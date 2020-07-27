@@ -5,8 +5,7 @@ export function capitalizeFirstLetter(word: string) {
 }
 
 export function getExtension(filename: string) {
-  console.log(filename);
-  return '' /*filename.split('.').pop()*/;
+  return filename.split('.').pop();
 }
 
 export function genId() {
@@ -14,6 +13,5 @@ export function genId() {
 }
 
 export function trimFileExtension(filename: string) {
-  console.log(filename);
-  return '' /*filename.replace(/\.[^/.]+$/, '')*/;
+  return filename.replace(/\.[^/.]+$/, '');
 }

@@ -29,6 +29,7 @@ interface TitleProps {
 }
 
 const Title = ({ column, onUpdate, tooltip }: TitleProps) => {
+  console.log(column);
   const classes = useStyles();
   const [isEditing, setEditing] = useState(false);
   const [title, setTitle] = useState(column.name);

@@ -56,7 +56,6 @@ const ProcessorForm = ({ component, onClose, onUpdate }: FormProps) => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
     setData({
       ...data,
       [event.target.name]: event.target.value,
