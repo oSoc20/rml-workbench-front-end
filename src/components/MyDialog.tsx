@@ -7,7 +7,6 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@material-ui/core';
-import SelectComponent from './SelectComponent';
 
 interface MyDialogProps {
   content: string | JSX.Element;
@@ -58,7 +57,6 @@ const MyDialog = (props: MyDialogProps) => {
     >
       <DialogTitle id="Dialog">{title}</DialogTitle>
       <DialogContent>
-        <SelectComponent title={title} />
         <Text content={content} />
       </DialogContent>
       <ShouldDisplayActions onClose={onClose} onSave={onSave} save={save} />

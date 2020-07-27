@@ -4,6 +4,8 @@ import { FormProps } from './ComponentForm';
 import { useState } from 'react';
 import { ComponentCategory } from '../../constants/componentCategory';
 import DropzoneAreaSources from '../DropZone';
+import { INPUT_CONFIG } from 'constants/defaults';
+import SelectComponent from '../SelectComponent';
 
 const DEFAULT = {
   type: 'source',
@@ -34,6 +36,7 @@ const SourceForm = ({ component, onUpdate, onClose }: FormProps) => {
     <MyDialog
       content={
         <>
+          <SelectComponent options={INPUT_CONFIG} />
           <DropzoneAreaSources />
         </>
       }
