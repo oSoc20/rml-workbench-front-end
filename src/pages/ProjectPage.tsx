@@ -15,23 +15,28 @@ import ProjectItem from '../components/items/ProjectItem';
 import { redirectTo } from '../services/history';
 import { getProjects, removeProject } from '../utils/storage';
 
+import background from '../assets/background.jpg';
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
     },
     list: {
       width: '100%',
       maxWidth: 400,
       position: 'relative',
       overflow: 'auto',
-      maxHeight: 290,
+      maxHeight: 300,
     },
     paper: {
       position: 'fixed',
       top: 0,
       left: 0,
       display: 'flex',
+      backgroundImage: `url(${background})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
