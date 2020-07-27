@@ -1,4 +1,4 @@
-import moment from 'moment';
+import { formatDistanceToNow } from 'date-fns';
 import React, { useState } from 'react';
 import {
   Button,
@@ -43,8 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const displayProject = (project: any) => {
-  const timestamp = moment(Number(project.createdAt)).valueOf();
-  return `Project: ${project.id} (${moment(timestamp).fromNow()})`;
+  return `Project: ${project.id} (${formatDistanceToNow(Number(project.createdAt))} ago)`;
 };
 
 const handleNewProject = () => {
