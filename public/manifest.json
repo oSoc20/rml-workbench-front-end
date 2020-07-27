@@ -1,6 +1,6 @@
 {
   "short_name": "RML.io Dashboard",
-  "name": "Graphical User Interface (GUI) that allows users to use the RML.io API to map data from one source to another.",
+  "name": "Web application which allows you to use RML.io to generate high-quality knowledge graphs.",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
