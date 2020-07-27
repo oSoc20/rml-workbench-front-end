@@ -1,4 +1,5 @@
-import {ComponentCategory} from "./componentCategory";
+import { genId } from '../utils/stringProcessing';
+import { ComponentCategory } from './componentCategory';
 
 export const Columns = {
   [ComponentCategory.Source]: {
@@ -9,8 +10,19 @@ export const Columns = {
     title: 'Processing',
     tooltip: 'Currently, only mappers are supported for RML processors.',
   },
-  [ComponentCategory.Target]: {
-    title: 'Target',
-    tooltip: 'Currently, the target can be only a RDF file.',
-  }
 };
+
+export const COLUMNS_DEFAULT = [
+  {
+    id: genId(),
+    name: Columns[ComponentCategory.Source].title,
+    category: ComponentCategory.Source,
+    components: [],
+  },
+  {
+    id: genId(),
+    name: Columns[ComponentCategory.Processor].title,
+    category: ComponentCategory.Processor,
+    components: [],
+  },
+];

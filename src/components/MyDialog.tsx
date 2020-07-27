@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core';
 
 interface MyDialogProps {
-  content: string | JSX.Element;
+  children: string | JSX.Element;
   onClose: any;
   onSave?: any;
   open: boolean;
@@ -17,8 +17,7 @@ interface MyDialogProps {
   title: string | JSX.Element;
 }
 
-const ShouldDisplayActions = (props: any) => {
-  const { onClose, onSave, save } = props;
+const ShouldDisplayActions = ({ onClose, onSave, save }) => {
   if (onSave) {
     return (
       <DialogActions>
@@ -31,20 +30,17 @@ const ShouldDisplayActions = (props: any) => {
       </DialogActions>
     );
   }
-  return <div></div>;
+  return <></>;
 };
 
-const Text = (props: any) => {
-  const content = props.content;
-  if (typeof content === 'string') {
-    return <DialogContentText>{content}</DialogContentText>;
+const Text = ({ children }) => {
+  if (typeof children === 'string') {
+    return <DialogContentText>{children}</DialogContentText>;
   }
-  return <div>{content}</div>;
+  return <div>{children}</div>;
 };
 
-const MyDialog = (props: MyDialogProps) => {
-  const { content, onClose, onSave, open, save, title } = props;
-  console.log(props);
+const MyDialog = ({ children, onClose, onSave, open, save, title }: MyDialogProps) => {
   return (
     <Dialog
       fullWidth={true}
@@ -57,7 +53,7 @@ const MyDialog = (props: MyDialogProps) => {
     >
       <DialogTitle id="Dialog">{title}</DialogTitle>
       <DialogContent>
-        <Text content={content} />
+        <Text children={children} />
       </DialogContent>
       <ShouldDisplayActions onClose={onClose} onSave={onSave} save={save} />
     </Dialog>

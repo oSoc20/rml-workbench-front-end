@@ -1,6 +1,6 @@
 import * as React from 'react';
 import MyDialog from '../MyDialog';
-import { FormProps } from './ComponentForm';
+import { FormProps } from '../form/ComponentForm';
 import { useState } from 'react';
 import { ComponentCategory } from '../../constants/componentCategory';
 import DropzoneAreaSources from '../DropZone';

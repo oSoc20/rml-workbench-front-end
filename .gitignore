@@ -1,4 +1,4 @@
-.cache
-dist
+*.log
+build
 node_modules
-.tern-port
+.cache

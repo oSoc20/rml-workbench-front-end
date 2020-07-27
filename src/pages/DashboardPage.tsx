@@ -1,114 +1,145 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useParams, Redirect } from 'react-router-dom';
 import {
   Button,
   Checkbox,
+  Container,
   FormControlLabel,
   FormGroup,
   Grid,
   Paper,
   Theme,
+  Typography,
   createStyles,
   makeStyles,
 } from '@material-ui/core';
-import { deepOrange, purple, teal } from '@material-ui/core/colors';
+import SendIcon from '@material-ui/icons/Send';
 
 import MyDialog from '../components/MyDialog';
-import Column from "../components/Column";
-import {ComponentCategory} from "../constants/componentCategory";
+import Column from '../components/Column';
+import { ComponentCategory } from '../constants/componentCategory';
+import { PROJECT_DEFAULT } from '../constants/project';
+import { findSources } from '../utils/mapperConfig';
+import { getProjects, isProjectExist, removeProject, saveProject } from '../utils/storage';
+import { genId } from '../utils/stringProcessing';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    textConfig: {
-      width: '30vw',
-      margin: '0 auto',
-    },
     deploy: {
       display: 'flex',
       alignItems: 'center',
       justifyCenter: 'center',
+      marginTop: theme.spacing(4),
     },
-    btnAdd: { paddingLeft: 0 },
-    input: { display: 'none' },
-    listItemText: {
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      overflow: 'hidden',
-      minWidth: 200,
-      maxWidth: 200,
-      [theme.breakpoints.up('sm')]: {
-        maxWidth: 400,
-      },
-      [theme.breakpoints.up('sm')]: {
-        maxWidth: 200,
-      },
-    },
-    orange: {
-      color: theme.palette.getContrastText(deepOrange[500]),
-      backgroundColor: deepOrange[500],
-    },
-    purple: {
-      color: theme.palette.getContrastText(purple[500]),
-      backgroundColor: purple[500],
+    heroContent: {
+      padding: theme.spacing(4, 0, 6),
     },
     root: {
       display: 'flex',
       flexDirection: 'column',
       height: '100vh',
-      overflow: 'hidden',
       paddingTop: theme.spacing(8),
     },
-    sourcesTitle: {
-      textAlign: 'center',
-      [theme.breakpoints.up('sm')]: {
-        textAlign: 'left',
-      },
-    },
-    teal: { backgroundColor: teal[500] },
-    textOrange: { color: deepOrange[500] },
-    textPurple: { color: purple[500] },
-    textTeal: { color: teal[500] },
   }),
 );
 
+const getAllComponentsByCategory = (columns, category) => {
+  return columns
+    .filter((col) => col.category === category)
+    .reduce((arr, col) => [...arr, ...col.components], []);
+};
 
-const CONFIG_DEFAULT = [{
-  id: new Date().getMilliseconds(),
-  category: ComponentCategory.Source,
-  components: []
-}, {
-  id: new Date().getMilliseconds() + 1, // or unique hash in future
-  category: ComponentCategory.Processor,
-  components: [],
-}, {
-  id: new Date().getMilliseconds() + 2,
-  category: ComponentCategory.Target,
-  components: [],
-}];
+const updateConfig = (config, columns) => {
+  const newConfig = { ...config };
 
-const Dashboard = () => {
+  const sources = getAllComponentsByCategory(columns, ComponentCategory.Source);
+  const processors = getAllComponentsByCategory(columns, ComponentCategory.Processor);
+
+  newConfig.processors = processors.map((processor: any) => {
+    if (processor.type === 'mapper') {
+      const sourceIds = findSources(processor.config)
+        .map((fileName) => sources.find((s) => s.file?.name === fileName)?.id)
+        .filter((id) => !id);
+
+      return {
+        ...processor,
+        sources: sourceIds,
+      };
+    }
+    return processor;
+  });
+  newConfig.sources = sources;
+  return newConfig;
+};
+
+const DashboardPage = () => {
+  const { id } = useParams();
+  var isUntitled = false;
+  if (id.includes('untitled')) {
+    isUntitled = true;
+  }
+
+  const project = useMemo(() => getProjects()[id], [id]);
+  if (!isUntitled && !project) {
+    return <Redirect to="/" />;
+  } else if (isUntitled) {
+    const newId = genId();
+    return (
+      <Dashboard
+        key={newId}
+        project={{
+          ...PROJECT_DEFAULT,
+          createdAt: new Date().getTime(),
+          id: newId,
+        }}
+      />
+    );
+  } else {
+    return <Dashboard key={id} project={project} />;
+  }
+};
+
+const Dashboard = ({ project }) => {
   const classes = useStyles();
 
   const [isDeploySettingsOpen, setIsDeploySettings] = useState(false);
 
-  const [columns, setColumns] = useState([...CONFIG_DEFAULT.map((col) => ({...col}))]);
-
-  const [isTmpDownloadable, setIsTmpDownloadable] = useState(false);
-  const [isTmpExecutable, setIsTmpExecutable] = useState(false);
-  const [isExecutable, setIsExecutable] = useState(false);
-  const [isDownloadable, setIsDownloadable] = useState(false);
+  const [columns, setColumns] = useState(project.columns);
+  const [config, setConfig] = useState(project.config);
 
   const handleUpdateColumn = (id, data) => {
     const newColumns = columns.map((col) => {
       if (col.id === id) {
-        return {...data};
+        return { ...data };
       }
       return col;
     });
+    const newConfig = updateConfig(config, newColumns);
 
-    // TODO save to localStorage (all projects) + processColumns to check if every processor has a target with same id
-
+    setConfig(newConfig);
     setColumns(newColumns);
   };
+
+  useEffect(() => {
+    const isEmptyDashboard = () => {
+      for (const column of columns) {
+        if (column.components.length !== 0) {
+          return false;
+        }
+      }
+      return true;
+    };
+
+    if (!isEmptyDashboard()) {
+      saveProject(project.id, {
+        ...project,
+        config,
+        columns,
+      });
+    } else if (isProjectExist(project.id)) {
+      removeProject(project);
+    }
+  }, [columns, config, project]);
 
   /* const handleFilesUpload = (event: any) => {
     if (event.target.files.length > 0 && sources.length === 0) {
@@ -131,27 +162,18 @@ const Dashboard = () => {
     }
   }; */
 
-  const handleChangeSettings = (setting: string) => (event: any) => {
-    if (setting === 'isTmpDownloadable') {
-      setIsTmpDownloadable(event.target.checked);
-    } else {
-      setIsTmpExecutable(event.target.checked);
-    }
+  const handleSettingsChange = (event: any) => {
+    setConfig({
+      ...config,
+      [event.target.name]: event.target.checked,
+    });
   };
 
-  const handleSettings = () => {
-    setIsDeploySettings(true);
-  };
-
-  const handleSettingsClose = () => {
-    setIsTmpDownloadable(isDownloadable);
-    setIsTmpExecutable(isExecutable);
-    setIsDeploySettings(false);
+  const setDeploySettingsOpen = (open) => {
+    setIsDeploySettings(open);
   };
 
   const handleSettingsSave = () => {
-    setIsDownloadable(isTmpExecutable);
-    setIsExecutable(isTmpDownloadable);
     sendData();
     setIsDeploySettings(false);
   };
@@ -168,10 +190,7 @@ const Dashboard = () => {
   }; */
 
   const sendData = async () => {
-    let formData = new FormData();
-    formData.append('isExecutable', JSON.stringify(isExecutable));
-    formData.append('isDownloadable', JSON.stringify(isDownloadable));
-
+    // let formData = new FormData();
     /* let tmpProcessors = [...processors];
     for (const processor of tmpProcessors) {
       processor.config = btoa(processor.config);
@@ -191,18 +210,17 @@ const Dashboard = () => {
     } */
   };
 
-  /* const toArray = (fileList: any) => {
-    return Array.prototype.slice.call(fileList);
-  }; */
-
   return (
     <Paper elevation={0} className={classes.root}>
-      <Grid container justify="center" spacing={8}>
-        {
-          columns.map((column) => (
-            <Column updateColumn={handleUpdateColumn} column={column} />
-          ))
-        }
+      <Container maxWidth="sm" component="main" className={classes.heroContent}>
+        <Typography variant="h5" align="center" color="textSecondary" component="h2">
+          Add your source files and mappings configs to deploy generate your RML file !
+        </Typography>
+      </Container>
+      <Grid container>
+        {columns.map((column, index: number) => (
+          <Column key={index} updateColumn={handleUpdateColumn} column={column} />
+        ))}
         <Grid item xs={12}>
           <Grid container justify="center" alignItems="center">
             <div className={classes.deploy}>
@@ -210,7 +228,8 @@ const Dashboard = () => {
                 variant="contained"
                 color="primary"
                 size="large"
-                onClick={() => handleSettings()}
+                onClick={() => setDeploySettingsOpen(true)}
+                startIcon={<SendIcon />}
               >
                 Deploy
               </Button>
@@ -218,40 +237,15 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Grid>
-
-      {/* <MyDialog
-        content={
-          <List>
-            {RDF_FILE_FORMATS.map((fileFormat: any) => (
-              <ListItem
-                button
-                onClick={() => handleFileFormatClick(fileFormat.name)}
-                key={fileFormat.name}
-              >
-                <ListItemAvatar>
-                  <Avatar className={classes.teal}>
-                    <DescriptionIcon />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={fileFormat.name} />
-              </ListItem>
-            ))}
-          </List>
-        }
-        onClose={handleTargetClose}
-        open={isTargetOpen}
-        title={'RDF file format'}
-      /> */}
-
       <MyDialog
-        content={
+        children={
           <FormGroup>
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isTmpExecutable}
-                  onChange={handleChangeSettings('isTmpExecutable')}
-                  name="isExecutable"
+                  checked={config.execute}
+                  onChange={handleSettingsChange}
+                  name="execute"
                   color="primary"
                 />
               }
@@ -260,9 +254,9 @@ const Dashboard = () => {
             <FormControlLabel
               control={
                 <Checkbox
-                  checked={isTmpDownloadable}
-                  onChange={handleChangeSettings('isTmpDownloadable')}
-                  name="isDownloadable"
+                  checked={config.download}
+                  onChange={handleSettingsChange}
+                  name="download"
                   color="primary"
                 />
               }
@@ -270,7 +264,7 @@ const Dashboard = () => {
             />
           </FormGroup>
         }
-        onClose={handleSettingsClose}
+        onClose={() => setDeploySettingsOpen(false)}
         onSave={handleSettingsSave}
         open={isDeploySettingsOpen}
         save={'Deploy'}
@@ -280,4 +274,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default DashboardPage;
