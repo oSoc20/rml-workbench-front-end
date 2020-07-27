@@ -15,7 +15,7 @@ import { ComponentCategory } from '../../constants/componentCategory';
 import { INPUT_CONFIG } from '../../constants/targets';
 import { FormProps } from './ComponentForm';
 import MyDialog from '../MyDialog';
-import DropzoneAreaSources from '../DropZone';
+import { DropzoneArea } from 'material-ui-dropzone';
 
 const DEFAULT = {
   type: 'source',
@@ -45,7 +45,6 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
   });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event);
     setData({
       ...data,
       [event.target.name]: event.target.value,
@@ -55,6 +54,13 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
   const handleSave = () => {
     onUpdate({
       ...data,
+    });
+  };
+
+  const handleChangeFiles = (files) => {
+    setData({
+      ...data,
+      files: files,
     });
   };
 
@@ -74,7 +80,16 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
               ))}
             </Select>
           </FormControl>
-          {data.type === 'file' ? <DropzoneAreaSources /> : <></>}
+          {data.type === 'file' ? (
+            <DropzoneArea
+              showFileNames
+              filesLimit={4}
+              onChange={handleChangeFiles}
+              acceptedFiles={INPUT_CONFIG[data.type].acceptedFileExtensions}
+            />
+          ) : (
+            <></>
+          )}
         </>
       }
       onClose={onClose}

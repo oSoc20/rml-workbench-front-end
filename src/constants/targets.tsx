@@ -29,13 +29,11 @@ export const MAPPER_CONFIG = {
   mapper: {
     type: 'mapper',
   },
-  mapper2: {
-    type: 'mapper2',
-  },
 };
 
 export const INPUT_CONFIG = {
   file: {
     type: 'file',
+    acceptedFileExtensions: ['.json', '.xml', '.csv'],
   },
 };

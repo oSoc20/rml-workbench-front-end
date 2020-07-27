@@ -12,6 +12,9 @@ export interface ComponentProps {
 }
 
 const ComponentItem = (props: ComponentProps) => {
+  props.component.files.map((file) => {
+    console.log(file.name);
+  });
   const { category } = props.component;
   if (category === ComponentCategory.Processor) {
     return <ProcessorItem {...props} />;

@@ -48,6 +48,7 @@ const Column = ({ column, updateColumn }: ColumnProps) => {
     }
 
     const data = { ...column };
+    console.log(data);
     if (component.id) {
       data.components = data.components.map((c: any) => {
         if (c.id === component.id) {
