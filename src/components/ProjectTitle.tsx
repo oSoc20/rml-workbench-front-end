@@ -26,7 +26,6 @@ const ProjectTitle = ({ onUpdate, title }: ProjectTitleProps) => {
 
   return (
     <div className={classes.root}>
-      <Typography>Project name:</Typography>
       <Title name={title} onUpdate={handleUpdate} />
     </div>
   );
