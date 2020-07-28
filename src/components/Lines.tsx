@@ -2,16 +2,15 @@ import React from 'react';
 import LineTo from 'react-lineto';
 
 interface LineProps {
-  sourceID: string;
-  processorID: string;
+  sourceId: string;
+  processorId: string;
 }
 
-const Line = ({ sourceID, processorID }: LineProps) => {
-  console.log(sourceID + ' ' + processorID);
+const Line = ({ sourceId, processorId }: LineProps) => {
   return (
     <LineTo
-      to={`source${sourceID}`}
-      from={`processor${processorID}`}
+      to={`source${sourceId}`}
+      from={`processor${processorId}`}
       fromAnchor="-5% 50%"
       toAnchor="center right"
       borderColor="black"

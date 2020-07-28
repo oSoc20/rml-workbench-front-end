@@ -8,7 +8,8 @@ export class DeployService implements IDeployService {
   };
 
   async create(data: any): Promise<Object> {
-    const url = `${BASE_URL}/api/create`;
+    console.log('working');
+    const url = `${BASE_URL}/api/v1/create`;
     let response: any;
     try {
       response = await fetch(url, {

@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SourceItem = ({ component, onRemove, onUpdate }: ComponentProps) => {
+  console.log(component.filename);
   const classes = useStyles();
   return (
     <ListItem
@@ -58,7 +59,7 @@ const SourceItem = ({ component, onRemove, onUpdate }: ComponentProps) => {
       </ListItemAvatar>
       <ListItemText
         className={classes.listItemText}
-        secondary={getExtension(component.file[0].name).toUpperCase() + ' file'}
+        secondary={getExtension(component.filename).toUpperCase() + ' file'}
       >
         <Typography
           component="span"
@@ -66,7 +67,7 @@ const SourceItem = ({ component, onRemove, onUpdate }: ComponentProps) => {
           className={classes.textPurple}
           color="textPrimary"
         >
-          {trimFileExtension(component.file[0].name)}
+          {trimFileExtension(component.filename)}
         </Typography>
       </ListItemText>
       <ListItemSecondaryAction>

@@ -66,7 +66,7 @@ const updateConfig = (config, columns) => {
   newConfig.processors = processors.map((processor: any) => {
     if (processor.type === 'mapper') {
       const sourceIds = findSources(processor.config).map(
-        (fileName) => sources.find((s) => s.file[0]?.name === fileName)?.id,
+        (fileName) => sources.find((s) => s.filename === fileName)?.id,
       );
       /*.filter((id) => !id);*/
 
@@ -151,7 +151,6 @@ const Dashboard = ({ project }) => {
         config,
         columns,
       });
-      console.log(getProjects());
     } else if (isProjectExist(project.id)) {
       removeProject(project);
     }
@@ -206,6 +205,7 @@ const Dashboard = ({ project }) => {
   }; */
 
   const sendData = async () => {
+    console.log(config);
     // let formData = new FormData();
     /* let tmpProcessors = [...processors];
     for (const processor of tmpProcessors) {
@@ -290,7 +290,7 @@ const Dashboard = ({ project }) => {
       {config.processors !== undefined ? (
         config.processors.map((processor) => {
           return processor.sources.map((source) => {
-            return <Line sourceID={source} processorID={processor.id} />;
+            return <Line sourceId={source} processorId={processor.id} />;
           });
         })
       ) : (

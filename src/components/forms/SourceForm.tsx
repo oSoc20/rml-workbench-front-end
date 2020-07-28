@@ -20,7 +20,7 @@ import { DropzoneArea } from 'material-ui-dropzone';
 const DEFAULT = {
   type: 'source',
   category: ComponentCategory.Source,
-  config: '',
+  source: '',
 };
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,6 +36,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 );
+
+const toBase64 = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (error) => reject(error);
+  });
 
 const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
   const classes = useStyles();
@@ -57,10 +65,14 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
     });
   };
 
-  const handleChangeFiles = (file) => {
+  //TODO: remove the if and change dropzone so it has a "onSave" instead of "onChange"
+  const handleChangeFiles = async (file) => {
+    var base64File;
+    file.length === 0 ? (base64File = '') : (base64File = await toBase64(file[0]));
     setData({
       ...data,
-      file: file,
+      filename: file[0]?.name,
+      source: base64File,
     });
   };
 
