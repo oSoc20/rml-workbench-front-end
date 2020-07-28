@@ -25,6 +25,8 @@ respect, in an arbitrary order:
 
 ![Deployment](assets/deployment.gif)
 
+**NOTE:** a source file can be linked to `1` or `n` processors.
+
 ## Getting Started
 
 Start by cloning the repository:
