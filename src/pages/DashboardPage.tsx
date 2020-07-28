@@ -64,9 +64,19 @@ const updateConfig = (config, columns) => {
   const sources = getAllComponentsByCategory(columns, ComponentCategory.Source);
   const processors = getAllComponentsByCategory(columns, ComponentCategory.Processor);
   newConfig.processors = processors.map((processor: any) => {
+    sources.map((source) => {
+      console.log('test');
+      console.log(source.file[0]?.name.substring(0, source.file[0]?.name.length - 4));
+      console.log(findSources(processor.config));
+    });
     if (processor.type === 'mapper') {
       const sourceIds = findSources(processor.config).map(
-        (fileName) => sources.find((s) => s.file[0]?.name === fileName)?.id,
+        (fileName: string) =>
+          sources.find(
+            (s) =>
+              s.file[0]?.name.substring(0, s.file[0]?.name.length - 4) ===
+              fileName.substring(0, fileName.length - 2),
+          )?.id,
       );
       /*.filter((id) => !id);*/
 
@@ -151,7 +161,6 @@ const Dashboard = ({ project }) => {
         config,
         columns,
       });
-      console.log(getProjects());
     } else if (isProjectExist(project.id)) {
       removeProject(project);
     }
@@ -266,7 +275,7 @@ const Dashboard = ({ project }) => {
                   color="primary"
                 />
               }
-              label="Execute the RDF file"
+              label="Execute the RML file"
             />
             <FormControlLabel
               control={
