@@ -3,12 +3,11 @@ import { IDeployService } from './IDeployService';
 
 export class DeployService implements IDeployService {
   headers: any = {
-    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
   };
 
   async create(data: any): Promise<Object> {
-    console.log('working');
+    console.log(data);
     const url = `${BASE_URL}/api/v1/create`;
     let response: any;
     try {

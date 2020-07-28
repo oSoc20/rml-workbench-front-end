@@ -24,6 +24,7 @@ import { findSources } from '../utils/mapperConfig';
 import { getProjects, isProjectExist, removeProject, saveProject } from '../utils/storage';
 import { genId } from '../utils/stringProcessing';
 import Line from '../components/Lines';
+import { DeployService } from '../services/DeployService';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -205,7 +206,8 @@ const Dashboard = ({ project }) => {
   }; */
 
   const sendData = async () => {
-    console.log(config);
+    var deployService = new DeployService();
+    await deployService.create(config);
     // let formData = new FormData();
     /* let tmpProcessors = [...processors];
     for (const processor of tmpProcessors) {

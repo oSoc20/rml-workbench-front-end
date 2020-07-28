@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const SourceItem = ({ component, onRemove, onUpdate }: ComponentProps) => {
-  console.log(component.filename);
   const classes = useStyles();
   return (
     <ListItem
