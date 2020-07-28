@@ -8,6 +8,25 @@
 
 ---
 
+## Getting Started
+
+Start by cloning the repository:
+
+    git clone https://github.com/oSoc20/rml-workbench-front-end
+
+Next, let's install the dependencies:
+
+    yarn install
+
+Finally, launch the web server:
+
+    yarn start
+
+The website is now available locally on `http://localhost:8080`.
+
+**NOTE:** for ease of development, [the backend](https://github.com/oSoc20/rml-workbench-back-end)
+is available on another repository.
+
 ## Use-cases
 
 A set of [use cases of knowledge graphs](https://github.com/kg-construct/use-cases) is available so
