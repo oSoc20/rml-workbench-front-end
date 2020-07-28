@@ -64,7 +64,6 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
       ...data,
       file: file,
     });
-
     file.length > 0 ? setDisabled(false) : setDisabled(true);
   };
 

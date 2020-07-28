@@ -288,8 +288,8 @@ const Dashboard = ({ project }) => {
       />
       {config.processors !== undefined ? (
         config.processors.map((processor) => {
-          return processor.sources.map((source) => {
-            return <Line sourceID={source} processorID={processor.id} />;
+          return processor.sources.map((source, index: number) => {
+            return <Line key={index} sourceID={source} processorID={processor.id} />;
           });
         })
       ) : (
