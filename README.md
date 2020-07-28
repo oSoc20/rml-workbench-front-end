@@ -17,7 +17,7 @@ First, you need to create or load a project:
 Once you get into your project, you have three points to
 respect, in an arbitrary order:
 
-1. add your source file(s) (input file(s) and/or RML file(s));
+1. add your source file(s): input file(s) and/or RML file(s);
 2. add your processor(s) by specifying:
    - its type of the RML file (e.g. N-Quads, TriG, Turtle);
    - its mapping configuration (generated from [Matey](https://rml.io/yarrrml/matey/)).
