@@ -23,7 +23,7 @@ respect, in an arbitrary order:
    - its mapping configuration (generated from [Matey](https://rml.io/yarrrml/matey/)).
 3. click on deploy and pick your deployment preferences (run your workspace and/or download it).
 
-<p align="center"><img src="assets/dashboard-page.png"/></p>
+![Deployment](assets/deployment.gif)
 
 ## Getting Started
 
