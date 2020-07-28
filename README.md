@@ -8,6 +8,11 @@
 
 ---
 
+## Use-cases
+
+A set of [use cases of knowledge graphs](https://github.com/kg-construct/use-cases) is available so
+that you can have a better global vision of the panel of possibilities that is provided to you.
+
 ## Vocabulary
 
 The following is a non-exhaustive list of commonly used vocabulary:
