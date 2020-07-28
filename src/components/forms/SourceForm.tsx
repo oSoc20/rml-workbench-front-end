@@ -18,7 +18,7 @@ import MyDialog from '../MyDialog';
 import { DropzoneArea } from 'material-ui-dropzone';
 
 const DEFAULT = {
-  type: 'source',
+  type: 'file',
   category: ComponentCategory.Source,
   config: '',
 };
