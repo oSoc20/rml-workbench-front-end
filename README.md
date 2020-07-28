@@ -21,7 +21,7 @@ respect, in an arbitrary order:
 2. add your processor(s) by specifying:
    - its type of the RML file (e.g. N-Quads, TriG, Turtle);
    - its mapping configuration (generated from [Matey](https://rml.io/yarrrml/matey/)).
-3. specify your deployment configuration (run your workspace and/or download it) and click on deploy.
+3. click on deploy and pick your deployment preferences (run your workspace and/or download it).
 
 <p align="center"><img src="assets/dashboard-page.png"/></p>
 
