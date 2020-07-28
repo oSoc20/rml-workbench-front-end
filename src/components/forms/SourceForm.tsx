@@ -82,6 +82,7 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
           </FormControl>
           {data.type === 'file' ? (
             <DropzoneArea
+              dropzoneText={'Drag and drop a source file here or click'}
               showFileNames
               filesLimit={1}
               onChange={handleChangeFiles}
@@ -98,7 +99,7 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
       save="Save"
       title={
         <>
-          <AccountTreeIcon /> Mappings config
+          <AccountTreeIcon /> Source file
         </>
       }
     />
