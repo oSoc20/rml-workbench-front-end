@@ -8,6 +8,23 @@
 
 ---
 
+## Generation of the RML file
+
+First, you need to create or load a project:
+
+<p align="center"><img src="assets/project-page.png"/></p>
+
+Once you get into your project, you have three points to
+respect, in an arbitrary order:
+
+1. add your source file(s) (input file(s) and/or RML file(s));
+2. add your processor(s) by specifying:
+   - its type of the RML file (e.g. N-Quads, TriG, Turtle);
+   - its mapping configuration (generated from [Matey](https://rml.io/yarrrml/matey/))
+3. specify your deployment configuration (run your workspace and/or download it) and click on deploy
+
+<p align="center"><img src="assets/dashboard-page.png"/></p>
+
 ## Getting Started
 
 Start by cloning the repository:
@@ -41,10 +58,10 @@ The following is a non-exhaustive list of commonly used vocabulary:
   <dd>Generates a target according to a mapping config.</dd>
 
   <dt>Source</dt>
-  <dd>An input files (e.g. CSV, JSON, XML) or an RDF file (e.g. N-Quads, TriG, Turtle).</dd>
+  <dd>An input file (e.g. CSV, JSON, XML) or an RML file (e.g. N-Quads, TriG, Turtle).</dd>
 
   <dt>Target</dt>
-  <dd>A RDF file (e.g. N-Quads, TriG, Turtle).</dd>
+  <dd>A RML file (e.g. N-Quads, TriG, Turtle).</dd>
 </dl>
 
 ## FAQ
