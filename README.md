@@ -22,7 +22,7 @@ Finally, launch the web server:
 
     yarn start
 
-The website is now available locally on `http://localhost:8080`.
+The website is now available locally on `http://localhost:8080`!
 
 **NOTE:** for ease of development, [the backend](https://github.com/oSoc20/rml-workbench-back-end)
 is available on another repository.
