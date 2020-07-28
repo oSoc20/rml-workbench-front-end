@@ -15,18 +15,25 @@ interface MyDialogProps {
   open: boolean;
   save?: string;
   title: string | JSX.Element;
+  disabledSave?: boolean;
 }
 
-const ShouldDisplayActions = ({ onClose, onSave, save }) => {
+const ShouldDisplayActions = ({ disabledSave, onClose, onSave, save }) => {
   if (onSave) {
     return (
       <DialogActions>
         <Button color="primary" onClick={onClose}>
           Cancel
         </Button>
-        <Button color="primary" onClick={onSave}>
-          {save}
-        </Button>
+        {disabledSave ? (
+          <Button color="primary" onClick={onSave} disabled={disabledSave}>
+            {save}
+          </Button>
+        ) : (
+          <Button color="primary" onClick={onSave}>
+            {save}
+          </Button>
+        )}
       </DialogActions>
     );
   }
@@ -40,7 +47,15 @@ const Text = ({ children }) => {
   return <div>{children}</div>;
 };
 
-const MyDialog = ({ children, onClose, onSave, open, save, title }: MyDialogProps) => {
+const MyDialog = ({
+  children,
+  disabledSave,
+  onClose,
+  onSave,
+  open,
+  save,
+  title,
+}: MyDialogProps) => {
   return (
     <Dialog
       fullWidth={true}
@@ -55,7 +70,12 @@ const MyDialog = ({ children, onClose, onSave, open, save, title }: MyDialogProp
       <DialogContent>
         <Text children={children} />
       </DialogContent>
-      <ShouldDisplayActions onClose={onClose} onSave={onSave} save={save} />
+      <ShouldDisplayActions
+        onClose={onClose}
+        onSave={onSave}
+        save={save}
+        disabledSave={disabledSave}
+      />
     </Dialog>
   );
 };

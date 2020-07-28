@@ -39,6 +39,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
   const classes = useStyles();
+  const [isDisabled, setDisabled] = useState(true);
+
   const [data, setData] = useState({
     ...DEFAULT,
     ...component,
@@ -62,6 +64,8 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
       ...data,
       file: file,
     });
+
+    file.length > 0 ? setDisabled(false) : setDisabled(true);
   };
 
   return (
@@ -96,6 +100,7 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
       onClose={onClose}
       onSave={handleSave}
       open={true}
+      disabledSave={isDisabled}
       save="Save"
       title={
         <>
