@@ -34,6 +34,6 @@ export const MAPPER_CONFIG = {
 export const INPUT_CONFIG = {
   file: {
     type: 'file',
-    acceptedFileExtensions: ['.json', '.xml', '.csv'],
+    acceptedFileExtensions: ['.csv', '.json', '.xml'],
   },
 };
