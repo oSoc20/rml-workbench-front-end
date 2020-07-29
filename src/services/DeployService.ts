@@ -3,6 +3,7 @@ import { IDeployService } from './IDeployService';
 
 export class DeployService implements IDeployService {
   headers: any = {
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
   };
 
@@ -10,7 +11,13 @@ export class DeployService implements IDeployService {
     console.log(data);
     const url = `${BASE_URL}/api/v1/create`;
     let response: any;
-    try {
+    response = await fetch(url, {
+      method: 'POST',
+      headers: this.headers,
+      body: JSON.stringify(data),
+    });
+    return Promise.resolve(response.json());
+    /*try {
       response = await fetch(url, {
         method: 'POST',
         headers: this.headers,
@@ -33,7 +40,7 @@ export class DeployService implements IDeployService {
       }
     } catch (error) {
       return Promise.reject(`Error while creating: ${error}`);
-    }
+    }*/
   }
 
   async updateByUID(data: any, uid: string): Promise<Object> {
