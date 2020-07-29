@@ -14,6 +14,7 @@ import {
 import { purple } from '@material-ui/core/colors';
 import ClearIcon from '@material-ui/icons/Clear';
 import DescriptionIcon from '@material-ui/icons/Description';
+import { Alert, AlertTitle } from '@material-ui/lab/';
 
 import { ComponentProps } from './ComponentItem';
 import { getExtension, trimFileExtension } from '../../utils/stringProcessing';
@@ -56,19 +57,28 @@ const SourceItem = ({ component, onRemove, onUpdate }: ComponentProps) => {
           <DescriptionIcon />
         </Avatar>
       </ListItemAvatar>
-      <ListItemText
-        className={classes.listItemText}
-        secondary={getExtension(component.file[0].name).toUpperCase() + ' file'}
-      >
-        <Typography
-          component="span"
-          variant="body2"
-          className={classes.textPurple}
-          color="textPrimary"
+      {component.file[0].name ? (
+        <ListItemText
+          className={classes.listItemText}
+          secondary={getExtension(component.file[0].name).toUpperCase() + ' file'}
         >
-          {trimFileExtension(component.file[0].name)}
-        </Typography>
-      </ListItemText>
+          <Typography
+            component="span"
+            variant="body2"
+            className={classes.textPurple}
+            color="textPrimary"
+          >
+            {trimFileExtension(component.file[0].name)}
+          </Typography>
+        </ListItemText>
+      ) : (
+        <ListItemText>
+          <Alert severity="warning">
+            <AlertTitle>Missing file</AlertTitle>
+            <strong>{component.file[0].path}</strong>
+          </Alert>
+        </ListItemText>
+      )}
       <ListItemSecondaryAction>
         <IconButton edge="end" aria-label="delete" onClick={() => onRemove(component.id)}>
           <ClearIcon />
