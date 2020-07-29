@@ -68,8 +68,6 @@ const updateConfig = (config, columns) => {
       const sourceIds = findSources(processor.config).map(
         (fileName: string) => sources.find((s) => s.file[0]?.name === fileName)?.id,
       );
-      /*.filter((id) => !id);*/
-
       return {
         ...processor,
         sources: sourceIds,
@@ -156,27 +154,6 @@ const Dashboard = ({ project }) => {
     }
   }, [columns, config, projectName, project]);
 
-  /* const handleFilesUpload = (event: any) => {
-    if (event.target.files.length > 0 && sources.length === 0) {
-      setSources(event.target.files);
-    } else {
-      let sourcesArray = toArray(sources);
-      let tmp = [];
-      for (const file of event.target.files) {
-        if (
-          sourcesArray
-            .map((source: any) => {
-              return source.name;
-            })
-            .indexOf(file.name) === -1
-        ) {
-          tmp.push(file);
-        }
-      }
-      setSources(sourcesArray.concat(tmp));
-    }
-  }; */
-
   const handleSettingsChange = (event: any) => {
     setConfig({
       ...config,
@@ -189,40 +166,7 @@ const Dashboard = ({ project }) => {
   };
 
   const handleSettingsSave = () => {
-    sendData();
     setIsDeploySettings(false);
-  };
-
-  /* const getBase64 = (file, cb) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      cb(reader.result);
-    };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
-  }; */
-
-  const sendData = async () => {
-    // let formData = new FormData();
-    /* let tmpProcessors = [...processors];
-    for (const processor of tmpProcessors) {
-      processor.config = btoa(processor.config);
-      console.log(processors[0].config);
-      formData.append('processors[]', JSON.stringify(processor));
-    }
-
-    toArray(sources).forEach((source) => {
-      getBase64(source, (result: any) => {
-        console.log(result);
-        formData.append('sources[]', result);
-      });
-    });
-
-    for (const pair of formData.entries()) {
-      console.log(pair[0] + ' - ' + pair[1]);
-    } */
   };
 
   return (
