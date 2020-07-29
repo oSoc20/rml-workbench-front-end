@@ -230,7 +230,7 @@ const Dashboard = ({ project }) => {
       <Container maxWidth="sm" component="main" className={classes.heroContent}>
         <ProjectTitle title={projectName} onUpdate={handleUpdateProject} />
         <Typography variant="h6" align="center" color="textSecondary" component="h2" gutterBottom>
-          Add your source files and mappings configs to deploy generate your RML file !
+          Add your source files and mappings configs to deploy generate your RML file!
         </Typography>
       </Container>
       <Grid container>
