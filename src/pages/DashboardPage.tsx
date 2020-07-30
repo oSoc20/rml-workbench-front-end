@@ -198,15 +198,19 @@ const Dashboard = ({ project }) => {
         <Grid item xs={12}>
           <Grid container justify="center" alignItems="center">
             <div className={classes.deploy}>
-              <Button
-                variant="contained"
-                color="primary"
-                size="large"
-                onClick={() => setDeploySettingsOpen(true)}
-                startIcon={<SendIcon />}
-              >
-                Deploy
-              </Button>
+              {downloadId != null ? (
+                <DownloadWithSocket id={downloadId} onFinished={() => setDownloadId(null)} />
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  onClick={() => setDeploySettingsOpen(true)}
+                  startIcon={<SendIcon />}
+                >
+                  Deploy
+                </Button>
+              )}
             </div>
           </Grid>
         </Grid>
@@ -244,11 +248,7 @@ const Dashboard = ({ project }) => {
         save={'Deploy'}
         title={'Deployment settings'}
       />
-      {downloadId != null ? (
-        <DownloadWithSocket id={downloadId} onFinished={() => setDownloadId(null)} />
-      ) : (
-        <></>
-      )}
+
       {config.processors !== undefined ? (
         config.processors.map((processor) => {
           return processor.sources.map((source, index: number) => {
