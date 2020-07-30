@@ -194,7 +194,7 @@ const Dashboard = ({ project }) => {
           component="h2"
           gutterBottom
         >
-          Add your source files and mappings configs to deploy or generate your RML file.
+          Add your source files and mappings configs to generate your high-quality Linked Data.
         </Typography>
       </Container>
       <Grid container>
