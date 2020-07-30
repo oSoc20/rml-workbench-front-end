@@ -70,6 +70,9 @@ const updateConfig = (config, columns) => {
       const sourceIds = findSources(processor.config).map(
         (fileName) => sources.find((s) => s.filename === fileName)?.id,
       );
+      console.log(sourceIds);
+      console.log(newConfig);
+
       return {
         ...processor,
         sources: sourceIds,
@@ -254,6 +257,7 @@ const Dashboard = ({ project }) => {
 
       {config.processors !== undefined ? (
         config.processors.map((processor) => {
+          console.log(config);
           return processor.sources.map((source, index: number) => {
             return <Line key={index} sourceId={source} processorId={processor.id} />;
           });
