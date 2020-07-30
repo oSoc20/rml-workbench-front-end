@@ -83,15 +83,12 @@ const updateConfig = (config, columns) => {
 
 const DashboardPage = () => {
   const { id } = useParams();
-  var isUntitled = false;
-  if (id.includes('untitled')) {
-    isUntitled = true;
-  }
 
   const project = useMemo(() => getProjects()[id], [id]);
-  if (!isUntitled && !project) {
+
+  if (id && !project) {
     return <Redirect to="/" />;
-  } else if (isUntitled) {
+  } else if (!id) {
     const newId = genId();
     return (
       <Dashboard

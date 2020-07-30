@@ -24,7 +24,7 @@ const DownloadWithSocket = ({ id, onFinished }) => {
       socket.disconnect();
       // close socket
     };
-  }, [id]);
+  }, [id, socket, onFinished]);
 
   return <CircularProgress />;
 };

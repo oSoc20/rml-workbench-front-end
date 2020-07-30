@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const handleNewProject = () => {
-  redirectTo('untitled/dashboard');
+  redirectTo('/dashboard');
 };
 
 const handleOpenProject = (project: any) => {
