@@ -168,6 +168,7 @@ const Dashboard = ({ project }) => {
   };
 
   const handleSettingsSave = () => {
+    sendData();
     setIsDeploySettings(false);
   };
 
