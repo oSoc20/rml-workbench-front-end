@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
 const Navbar = () => {
   const classes = useStyles();
   return (
-    <AppBar position="static" className={classes.appBar} elevation={1}>
+    <AppBar className={classes.appBar} elevation={1}>
       <Toolbar>
         <a href="/#" className={classes.brand}>
           <Avatar alt="Logo" src={logo} className={classes.large} />
