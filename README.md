@@ -4,8 +4,7 @@
 <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square"/></a>
 <a href="https://github.com/oSoc20/rml-workbench-front-end/releases"><img src="https://img.shields.io/badge/Version-0.1.0-blue.svg?style=flat-square"/></a>
 </p>
-<p align="center">RML.io Dashboard is a web application which allows you to use <a
-href="https://rml.io/">RML.io</a> to generate high-quality Linked Data, in order to create
+<p align="center">Web application which allows you to use <a href="https://rml.io/">RML.io</a> to generate high-quality Linked Data, in order to create
 knowledge graphs<p>
 
 ---
