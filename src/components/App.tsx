@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Router } from 'react-router-dom';
-import { CssBaseline, MuiThemeProvider, createStyles, makeStyles } from '@material-ui/core';
+import { CssBaseline, ThemeProvider, createStyles, makeStyles } from '@material-ui/core';
 
 import Navbar from './Navbar';
 import RouteHandler from '../routes/RouteHandler';
@@ -22,13 +22,13 @@ const App = () => {
   return (
     <div className={classes.root}>
       <Router history={history}>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <CssBaseline />
           <Navbar />
           <main>
             <RouteHandler />
           </main>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </Router>
     </div>
   );
