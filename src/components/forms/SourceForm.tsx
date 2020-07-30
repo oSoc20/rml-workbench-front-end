@@ -18,7 +18,7 @@ import MyDialog from '../MyDialog';
 import { DropzoneArea } from 'material-ui-dropzone';
 
 const DEFAULT = {
-  type: 'source',
+  type: 'file',
   category: ComponentCategory.Source,
   source: '',
 };
@@ -47,6 +47,8 @@ const toBase64 = (file) =>
 
 const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
   const classes = useStyles();
+  const [isDisabled, setDisabled] = useState(true);
+
   const [data, setData] = useState({
     ...DEFAULT,
     ...component,
@@ -79,6 +81,7 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
       filename: file[0]?.name,
       source: base64File,
     });
+    file.length > 0 ? setDisabled(false) : setDisabled(true);
   };
 
   return (
@@ -99,6 +102,7 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
           </FormControl>
           {data.type === 'file' ? (
             <DropzoneArea
+              dropzoneText={'Drag and drop a source file here or click'}
               showFileNames
               filesLimit={1}
               onChange={handleChangeFiles}
@@ -112,10 +116,11 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
       onClose={onClose}
       onSave={handleSave}
       open={true}
+      disabledSave={isDisabled}
       save="Save"
       title={
         <>
-          <AccountTreeIcon /> Mappings config
+          <AccountTreeIcon /> Source file
         </>
       }
     />

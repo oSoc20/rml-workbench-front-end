@@ -66,6 +66,12 @@ const Title = ({ name, onUpdate, tooltip }: TitleProps) => {
           onChange={handleChange}
           className={classes.textField}
           inputProps={{ maxLength: 30 }}
+          onKeyPress={(event) => {
+            if (event.key === 'Enter') {
+              handleSaveTitle();
+              event.preventDefault();
+            }
+          }}
         />
         <Button onClick={handleCloseEditing}>
           <ClearIcon />

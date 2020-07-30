@@ -4,7 +4,7 @@ import { ComponentCategory } from './componentCategory';
 export const Columns = {
   [ComponentCategory.Source]: {
     title: 'Sources',
-    tooltip: 'Input files (e.g. CSV, JSON, XML) and/or an RDF files (e.g. Ntriples, Turtle).',
+    tooltip: 'Input files (e.g. CSV, JSON, XML) and/or an RML files (e.g. Ntriples, Turtle).',
   },
   [ComponentCategory.Processor]: {
     title: 'Processing',
