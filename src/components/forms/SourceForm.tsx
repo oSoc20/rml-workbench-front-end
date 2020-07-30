@@ -67,8 +67,13 @@ const SourceForm = ({ component, onClose, onUpdate }: FormProps) => {
 
   //TODO: remove the if and change dropzone so it has a "onSave" instead of "onChange"
   const handleChangeFiles = async (file) => {
-    var base64File;
-    file.length === 0 ? (base64File = '') : (base64File = await toBase64(file[0]));
+    let base64File;
+    if (file.length === 0) {
+      base64File = '';
+    } else {
+      base64File = await toBase64(file[0]);
+      base64File = base64File.split(',')[1];
+    }
     setData({
       ...data,
       filename: file[0]?.name,

@@ -25,6 +25,7 @@ import { getProjects, isProjectExist, removeProject, saveProject } from '../util
 import { genId } from '../utils/stringProcessing';
 import Line from '../components/Lines';
 import { DeployService } from '../services/DeployService';
+import DownloadWithSocket from '../components/DownloadWithSocket';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -114,7 +115,7 @@ const Dashboard = ({ project }) => {
   const classes = useStyles();
 
   const [isDeploySettingsOpen, setIsDeploySettings] = useState(false);
-
+  const [downloadId, setDownloadId] = useState(null);
   const [columns, setColumns] = useState(project.columns);
   const [projectName, setProjectName] = useState(project.name);
   const [config, setConfig] = useState(project.config);
@@ -206,8 +207,14 @@ const Dashboard = ({ project }) => {
   }; */
 
   const sendData = async () => {
+    config.processors = config.processors.map((processor) => ({
+      ...processor,
+      config: btoa(processor.config),
+    }));
+    console.log(config);
     var deployService = new DeployService();
-    await deployService.create(config);
+    var response = await deployService.create(config);
+    setDownloadId(response['token']);
     // let formData = new FormData();
     /* let tmpProcessors = [...processors];
     for (const processor of tmpProcessors) {
@@ -289,6 +296,11 @@ const Dashboard = ({ project }) => {
         save={'Deploy'}
         title={'Deployment settings'}
       />
+      {downloadId != null ? (
+        <DownloadWithSocket id={downloadId} onFinished={() => setDownloadId(null)} />
+      ) : (
+        <></>
+      )}
       {config.processors !== undefined ? (
         config.processors.map((processor) => {
           return processor.sources.map((source) => {
