@@ -1,5 +1,5 @@
 export function findSources(mapperConfig: string) {
-  let regexSourceLine = /(?<=\/input\/)\w*.\w*/gi,
+  let regexSourceLine = /(?<=rml:source )"(\w*.\w*)"/g,
     result,
     indices = [];
   while ((result = regexSourceLine.exec(mapperConfig))) {
